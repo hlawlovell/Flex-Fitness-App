@@ -1,10 +1,28 @@
 from django.db import models
 
 # Create your models here.
-class User(models.Model):
-    email = models.CharField(max_length=50)
-    userName = models.CharField(max_length=50)
+class UserCredential(models.Model):
+
+    email = models.EmailField(max_length=50, unique=True)
+    #userName = models.CharField(max_length=50, unique=True)
     password = models.CharField(max_length=50) 
+    creation_date = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return self.userName
+        return self.email
+
+class Profile(models.Model):
+
+    name = models.CharField(max_length=50)
+    birthday = models.DateField()
+    height = models.DecimalField(max_digits=6,decimal_places=2)
+    Weight = models.DecimalField(max_digits=6,decimal_places=2)
+    bench = models.DecimalField(max_digits=6,decimal_places=2)
+    squat = models.DecimalField(max_digits=6,decimal_places=2)
+    deadlift = models.DecimalField(max_digits=6,decimal_places=2)
+    flexScore = models.IntegerField()
+    user = models.ForeignKey(UserCredential, on_delete = models.SET_NULL, blank=True, null=True)
+
+    def __str__(self):
+        return self.user.email
+
