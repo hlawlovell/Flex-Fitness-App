@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { BrowserRouter as Router } from "react-router-dom";
+import { render } from "react-dom"
+import { Router, Link } from "@reach/router"
 //import App from './components/app/App';
 import Landing from "./pages/Landing";
 import Login from "./pages/Login";
@@ -15,3 +16,4 @@ ReactDOM.render(
   </Router>,
   document.getElementById('root')
 );
+
