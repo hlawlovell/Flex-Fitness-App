@@ -5,7 +5,7 @@ import Nav from 'react-bootstrap/Nav';
 import '../components/common.css'
 
 
-const Home = () => (
+const Workout = () => (
   <div>
     {/*Handles head elements*/}
     <Helmet>
@@ -14,16 +14,16 @@ const Home = () => (
     </Helmet>
 
     {/*Page Content*/}
-    <h1>Home</h1>
+    <h1>Workout</h1>
 
     {/*Nav bar*/}
     <Container-fluid>
       <Navbar variant="light" bg="light" fixed="bottom">
-          <Nav.Link href="" className="selected">Home</Nav.Link>
-          <Nav.Link href="/workout">Workout</Nav.Link>
+          <Nav.Link href="/home">Home</Nav.Link>
+          <Nav.Link href="" className="selected">Workout</Nav.Link>
           <Nav.Link href="/profile">Profile</Nav.Link>
       </Navbar>
     </Container-fluid>
   </div>
 )
-export default Home;
+export default Workout;

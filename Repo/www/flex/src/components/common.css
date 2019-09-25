@@ -1,0 +1,23 @@
+.navbar {
+    padding: 0 !important;
+}
+
+.nav-link {             /* <- this affects all navbars */
+    text-align: center;
+    display: inline-block;
+    width: 33%;
+    color: grey;
+    margin: auto;
+    padding:0 !important;
+    line-height: 6vh;
+}
+
+.selected{
+    background-color: grey;
+    color: white;
+
+}
+
+.nav-link:hover{             /* <- this affects all navbars */
+    color: darkslategrey;
+}
