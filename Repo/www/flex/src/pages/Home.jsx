@@ -2,8 +2,10 @@ import React from "react"
 import {Helmet} from "react-helmet";
 import Navbar from 'react-bootstrap/Navbar';
 import Nav from 'react-bootstrap/Nav';
+import Container from 'react-bootstrap/Container';
+import Col from 'react-bootstrap/Col';
+import Chart from '../components/Chart'
 import '../components/common.css'
-import {Bar} from 'react-chartjs-2';
 
 const Home = () => (
   <div>
@@ -15,16 +17,12 @@ const Home = () => (
 
     {/*Page Content*/}
     <h1>Home</h1>
-    < Bar data={{
-        labels: ["January", "February", "March", "April", "May", "June", "July"],
-        datasets: [{
-        label: "My First dataset",
-        backgroundColor: 'rgb(255, 99, 132)',
-        borderColor: 'rgb(255, 99, 132)',
-        data: [0, 10, 5, 2, 20, 30, 45],
-        }]
-    }} />
     {/*Nav bar*/}
+    <div className="housing">
+      <div className="statChart" >
+        <Chart  />
+      </div>
+    </div>
     <Container-fluid>
       <Navbar variant="light" bg="light" fixed="bottom">
           <Nav.Link href="" className="selected">Home</Nav.Link>

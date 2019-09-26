@@ -21,3 +21,15 @@
 .nav-link:hover{             /* <- this affects all navbars */
     color: darkslategrey;
 }
+
+.statChart{
+    max-width: 1500px;
+    margin:auto;
+}
+
+.housing{
+    width: 100%;
+    position: absolute;
+    bottom: 0;
+    padding-bottom: 10vh;
+}
