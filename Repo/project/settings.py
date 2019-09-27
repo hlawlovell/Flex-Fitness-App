@@ -121,5 +121,8 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-# Redirect to home URL after login (Default redirects to /accounts/profile/)
-LOGIN_REDIRECT_URL = '/'
+# Redirect to home URL after login
+LOGIN_REDIRECT_URL = 'home'
+
+# Redirect to login URL after logout
+LOGOUT_REDIRECT_URL = '/accounts/login'
