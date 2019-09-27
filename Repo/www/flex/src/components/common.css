@@ -33,3 +33,20 @@
     bottom: 0;
     padding-bottom: 10vh;
 }
+
+#logForm{
+    width:80%;
+    max-width: 400px;
+    margin:auto;
+    padding: 35vh 0;
+}
+
+#logForm .formButton{
+    margin-right:10px;
+}
+
+#logForm h1{
+    text-align: center;
+    font-weight: bold;
+    margin-bottom:5vh;
+}
