@@ -4,6 +4,7 @@ import { Router } from "@reach/router"
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Landing from "./pages/Landing";
 import Login from "./pages/Login";
+import Register from "./pages/Register";
 import Home from "./pages/Home";
 import Workout from "./pages/Workout";
 import Profile from "./pages/Profile";
@@ -13,6 +14,7 @@ ReactDOM.render(
   <Router>
     <Landing path="/" />
     <Login path="/login" />
+    <Register path="/register" />
     <Home path="/home" />
     <Workout path="/workout" />
     <Profile path="/profile" />

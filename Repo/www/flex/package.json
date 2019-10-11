@@ -12,7 +12,8 @@
     "react-chartjs2": "^1.2.1",
     "react-dom": "^16.9.0",
     "react-helmet": "^5.2.1",
-    "react-scripts": "0.9.5"
+    "react-scripts": "0.9.5",
+    "styled-components": "^4.4.0"
   },
   "devDependencies": {},
   "scripts": {
