@@ -1,35 +1,40 @@
 import React from "react"
-import {Helmet} from "react-helmet";
-import Navbar from 'react-bootstrap/Navbar';
-import Nav from 'react-bootstrap/Nav';
-import Container from 'react-bootstrap/Container';
-import Col from 'react-bootstrap/Col';
+import MetaTags from 'react-meta-tags';
+import { Container, Row, Col } from "react-bootstrap";
 import Chart from '../components/Chart'
+import Nav from '../components/nav'
 import '../components/common.css'
+import '../components/Home.css'
 
-const Home = () => (
-  <div>
-    {/*Handles head elements*/}
-    <Helmet>
-      <title>Flex</title>
-      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    </Helmet>
-
-    {/*Page Content*/}
-    <h1>Home</h1>
-    {/*Nav bar*/}
-    <div className="housing">
-      <div className="statChart" >
-        <Chart  />
-      </div>
-    </div>
-    <Container-fluid>
-      <Navbar variant="light" bg="light" fixed="bottom">
-          <Nav.Link href="" className="selected">Home</Nav.Link>
-          <Nav.Link href="/workout">Workout</Nav.Link>
-          <Nav.Link href="/profile">Profile</Nav.Link>
-      </Navbar>
-    </Container-fluid>
-  </div>
-)
+const Home = () => {
+    return (
+        <div class="wrapper">
+          <MetaTags>
+            <title>Page 1</title>
+            <meta name="viewport" content="width=device-width, initial-scale=1" />
+            <link href="https://fonts.googleapis.com/css?family=Quicksand&display=swap" rel="stylesheet" />
+          </MetaTags>
+          <div class="content"> 
+          <Container>
+            <Row >
+            <Col>1 of 3</Col>
+            <Col xs={6}><h1 >Flex</h1></Col>
+            <Col>3 of 3</Col>
+            </Row>
+            <Row>
+              <Col>1 of 3</Col>
+              <Col>2 of 3</Col>
+              <Col>3 of 3</Col>
+            </Row>
+          </Container> 
+          <Container>
+              <Chart/>
+          </Container>
+          <Container>
+              <Nav  selected={"home"}/>
+          </Container>
+          </div>
+        </div>
+      )
+}
 export default Home;

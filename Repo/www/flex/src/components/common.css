@@ -1,35 +1,58 @@
-.navbar {
-    padding: 0 !important;
-}
 
-.nav-link {             /* <- this affects all navbars */
+  body {
+    background: #007bff;
+    background: linear-gradient(to right, #0062E6, #33AEFF);
+    padding: 0;
+  }
+
+  .navbar {
+      padding: 0;
+  }
+  .navbar a {
+    float: left;
+    padding: 12px;
+    color: #555;
+    text-decoration: none;
+    font-size: 20px;
+    width: 33.3%; 
     text-align: center;
-    display: inline-block;
-    width: 33%;
-    color: grey;
-    margin: auto;
-    padding:0 !important;
-    line-height: 6vh;
+  }
+
+  .navbar a:hover {
+    background-color: rgb(226, 226, 226);
+  }
+  
+  .navbar a.active {
+    background-color: rgb(175, 175, 175);
+    color:white;
+  }
+
+  @media screen and (max-width: 500px) {
+    .navbar a {
+        font-size: 17px;
+    }
+  }
+
+@media (min-width: 1800px){
+    .container {
+        max-width: 80% !important;
+    }
+}
+/* 
+@media (min-width: 2200px){
+    .container {
+        max-width: 2140px;
+    }
 }
 
-.selected{
-    background-color: grey;
-    color: white;
-
+@media (min-width: 2800px){
+    .container {
+        max-width: 2740px;
+    }
 }
 
-.nav-link:hover{             /* <- this affects all navbars */
-    color: darkslategrey;
-}
-
-.statChart{
-    max-width: 1500px;
-    margin:auto;
-}
-
-.housing{
-    width: 100%;
-    position: absolute;
-    bottom: 0;
-    padding-bottom: 10vh;
-}
+@media (min-width: 3300px){
+    .container {
+        max-width: 3270px;
+    }
+} */

@@ -9,8 +9,8 @@ class Chart extends Component{
                 labels: ["January", "February", "March", "April", "May", "June", "July"],
                 datasets: [{
                 label: "",
-                backgroundColor: 'rgb(255, 99, 132)',
-                borderColor: 'rgb(255, 99, 132)',
+                backgroundColor: 'rgb(255,255,255,0)',
+                borderColor: 'rgb(255, 255,255)',
                 data: [110, 120, 125, 125, 135, 142, 145],
                 }]     
             }
@@ -34,7 +34,7 @@ class Chart extends Component{
                         scales: {
                             xAxes: [{
                                 gridLines: {
-                                    drawOnChartArea: false
+                                    drawOnChartArea: true
                                 }
                             }],
                             yAxes: [{

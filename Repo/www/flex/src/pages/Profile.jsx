@@ -1,29 +1,36 @@
 import React from "react"
-import {Helmet} from "react-helmet";
-import Navbar from 'react-bootstrap/Navbar';
-import Nav from 'react-bootstrap/Nav';
+import MetaTags from 'react-meta-tags';
+import { Container, Row, Col } from "react-bootstrap";
+import Nav from '../components/nav'
 import '../components/common.css'
 
 
-const Profile = () => (
-  <div>
-    {/*Handles head elements*/}
-    <Helmet>
-      <title>Flex</title>
-      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    </Helmet>
-
-    {/*Page Content*/}
-    <h1>Profile</h1>
-
-    {/*Nav bar*/}
-    <Container-fluid>
-      <Navbar variant="light" bg="light" fixed="bottom">
-          <Nav.Link href="/home" >Home</Nav.Link>
-          <Nav.Link href="/workout">Workout</Nav.Link>
-          <Nav.Link href="" className="selected">Profile</Nav.Link>
-      </Navbar>
-    </Container-fluid>
-  </div>
-)
+const Profile = () => {
+  return (
+    <div class="wrapper">
+      <MetaTags>
+        <title>Page 1</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link href="https://fonts.googleapis.com/css?family=Quicksand&display=swap" rel="stylesheet" />
+      </MetaTags>
+      <div class="content"> 
+      <Container>
+        <Row>
+        <Col>1 of 3</Col>
+        <Col xs={6}><h1>Flex</h1></Col>
+        <Col>3 of 3</Col>
+        </Row>
+        <Row>
+          <Col>1 of 3</Col>
+          <Col>2 of 3</Col>
+          <Col>3 of 3</Col>
+        </Row>
+      </Container> 
+      <Container>
+          <Nav  selected={"profile"}/>
+      </Container>
+      </div>
+    </div>
+  )
+  }
 export default Profile;

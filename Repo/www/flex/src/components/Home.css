@@ -1,0 +1,15 @@
+h1{
+    font-family: 'Quicksand', sans-serif;
+    color: white;
+    text-align: center;
+    font-size: xx-large;
+}
+.row{
+    border: thin solid black;
+}
+
+@media (min-width: 1800px){
+    .container {
+        max-width: 1740px;
+    }
+}
