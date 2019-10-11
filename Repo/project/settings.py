@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'flexapp',
+    'rest_framework_swagger',
 ]
 
 MIDDLEWARE = [
@@ -122,7 +123,7 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 # Redirect to home URL after login
-LOGIN_REDIRECT_URL = 'home'
+LOGIN_REDIRECT_URL = 'stats'
 
 # Redirect to login URL after logout
-LOGOUT_REDIRECT_URL = '/accounts/login'
+LOGOUT_REDIRECT_URL = 'login'
