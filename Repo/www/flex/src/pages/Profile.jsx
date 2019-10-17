@@ -36,26 +36,30 @@ const FormElements = styled.div`
 const bigInfoBox = {
   width: '50%',
   height: '25px',
-  border: 'solid 1px black'
+  border: 'solid 1px black',
+  background:'white'
 }
 
 const LongInput = styled.input`
   width: 50%;
   height: 25px;
-  border: solid 1px black;
+  border: solid 1px black;,
+  background:'white'
   flex-direction: column;
 `;
 
 const smallInfoBox = {
   width: '100%',
   height: '25px',
-  border: 'solid 1px black'
+  border: 'solid 1px black',
+  background:'white'
 }
 
 const ShortInput = styled.input`
   width: 100%;
   height: 25px;
-  border: solid 1px black;
+  border: solid 1px black;,
+  background:'white'
 `;
 
 const EmptySpace = styled.div`
@@ -104,7 +108,7 @@ const Profile = () => {
 
             <label for="pic_upload" style={labelStyle}> 
               <DisplayPhoto src={GenericDisplay} />
-              <span style={{ display: 'block'}}>change</span> 
+              <span style={{ color:'rgb(192, 192, 192)', display: 'block'}}>change</span> 
             </label> 
             <input id="pic_upload" style={changeButtonStyle} type="file" accept="image/*" name="display_pic"/>
 

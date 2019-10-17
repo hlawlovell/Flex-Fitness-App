@@ -16,23 +16,34 @@ const Home = () => {
           </MetaTags>
           <div class="content"> 
           <Container>
-            <Row >
-            <Col>1 of 3</Col>
+            <Row id="homeRow1">
+            <Col></Col>
             <Col xs={6}><h1 >Flex</h1></Col>
-            <Col>3 of 3</Col>
+            <Col></Col>
             </Row>
-            <Row>
-              <Col>1 of 3</Col>
-              <Col>2 of 3</Col>
-              <Col>3 of 3</Col>
+            <Row id="homeRow2">
+            </Row>
+            <Row id="homeRow3">
+              <Col></Col>
+              <Col xs={12} id="scoreWrapper">
+                <h1>200</h1>
+                <Row id="flexScores">
+                    <Col><h2>200</h2></Col>
+                    <Col><h2>200</h2></Col>
+                    <Col><h2>200</h2></Col>
+                  </Row>
+                </Col>
+              <Col></Col>
+            </Row>
+            <Row id="homeRow4">
+              <div id="chartContain">
+                <div id="chartWrap"><Chart /></div>
+              </div>
+            </Row>
+            <Row id="homeRow5">
+              <Nav  selected={"home"}/>
             </Row>
           </Container> 
-          <Container>
-              <Chart/>
-          </Container>
-          <Container>
-              <Nav  selected={"home"}/>
-          </Container>
           </div>
         </div>
       )

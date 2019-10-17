@@ -1,6 +1,5 @@
   body {
-    background: #007bff;
-    background: linear-gradient(to right, #0062E6, #33AEFF);
+    background: #1A2227;
     padding: 0;
   }
 
@@ -32,6 +31,10 @@
     }
   }
 
+
+label{
+  color:rgb(192, 192, 192);
+}
 @media (min-width: 1800px){
     .container {
         max-width: 80% !important;

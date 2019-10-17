@@ -1,11 +1,71 @@
 h1{
-    font-family: 'Quicksand', sans-serif;
+    font-family: sans-serif;
     color: white;
     text-align: center;
-    font-size: xx-large;
+    font-size: 3em;
+    font-weight: bold;
+}
+@media (min-width: 700px){
+    h1 {
+        font-size: 4.5em;
+    }
+}
+
+h2{
+    font-family: sans-serif;
+    color: white;
+    text-align: center;
+    font-size: 2.5em;
+}
+@media (max-width: 420px){
+    h2 {
+        font-size: 1.5em;
+    }
 }
 .row{
-    border: thin solid black;
+}
+
+#homeRow2{
+    height:10vh;
+}
+
+#homeRow4{
+    height:40vh;
+}
+@media (min-height: 680px){
+    .container {
+        max-width: 1740px;
+    }
+}
+#chartContain{
+    width:60%;
+    min-width: 400px;
+    margin:auto;
+}
+@media (max-width: 420px){
+    #chartContain {
+        min-width: 200px;
+        width:90%;
+    }
+}
+#scoreWrapper{
+    min-width: 350px;
+    max-width: 400px;
+    padding-bottom: 10px;
+}
+@media (max-width: 420px){
+    #scoreWrapper {
+        max-width:90%;
+        min-width: 200px;
+        margin:auto;
+        padding-bottom: 0px;
+
+        
+    }
+}
+
+.col{
+    text-align: center;
 }
 
 @media (min-width: 1800px){
