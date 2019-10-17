@@ -9,8 +9,8 @@ class Chart extends Component{
                 labels: ["January", "February", "March", "April", "May", "June", "July"],
                 datasets: [{
                 label: "",
-                backgroundColor: 'rgb(74, 181, 184,0.8)',
-                borderColor: 'rgb(255, 255,255)',
+                backgroundColor: 'rgb(86, 199, 201)',
+                borderColor:'white',
                 data: [110, 120, 125, 125, 135, 142, 145],
                 }]     
             }

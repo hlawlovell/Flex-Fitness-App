@@ -5,8 +5,10 @@ import Chart from '../components/Chart'
 import Nav from '../components/nav'
 import '../components/common.css'
 import '../components/Home.css'
+import Logo from '../components/Logo';
 
-const Home = () => {
+
+const Flex = () => {
     return (
         <div class="wrapper">
           <MetaTags>
@@ -15,12 +17,8 @@ const Home = () => {
             <link href="https://fonts.googleapis.com/css?family=Quicksand&display=swap" rel="stylesheet" />
           </MetaTags>
           <div class="content"> 
+          <Logo />
           <Container>
-            <Row id="homeRow1">
-            <Col></Col>
-            <Col xs={6}><h1 >Flex</h1></Col>
-            <Col></Col>
-            </Row>
             <Row id="homeRow2">
             </Row>
             <Row id="homeRow3">
@@ -48,4 +46,4 @@ const Home = () => {
         </div>
       )
 }
-export default Home;
+export default Flex;
