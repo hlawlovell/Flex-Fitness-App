@@ -117,13 +117,16 @@ USE_L10N = True
 USE_TZ = True
 
 
+AUTH_PROFILE_MODULE = 'Profile'
+
+
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
 STATIC_URL = '/static/'
 
 # Redirect to home URL after login
-LOGIN_REDIRECT_URL = 'stats'
+LOGIN_REDIRECT_URL = 'profile'
 
 # Redirect to login URL after logout
 LOGOUT_REDIRECT_URL = 'login'

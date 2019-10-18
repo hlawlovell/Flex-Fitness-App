@@ -1,72 +1,47 @@
 """
 FLEXapp project views details
 """
-from django.shortcuts import render
-from django.http import Http404, HttpResponse
-from django.views import View
-from django.contrib.auth import login, authenticate
 
-from rest_framework import viewsets
+from django.views import View
+from django.views import generic
+from django.urls import reverse_lazy
+from django.core import serializers as sz
+from django.contrib.auth.forms import UserCreationForm
+from django.http import Http404, HttpResponse
 
 from .models import *
 from .serializers import *
-from .forms import SignUpForm
 
 # Create your views here.
-class UserView(viewsets.ModelViewSet):
-    queryset = UserCredential.objects.all()
-    serializer_class = UserCredentialSerializers
+class SignUpView(generic.CreateView):
+    form_class = UserCreationForm
+    success_url = reverse_lazy('login')
+    template_name = 'signup.html'
 
-class LoginView(View):
-    email = ''
-    password = ''
-
-    def get(self, request):
-        return render(request, 'login.html')
-
-    def post(self, request):
-        email = request.POST.get('email')
-        password = request.POST.get('password')
-
-        try:
-            user = UserCredential.objects.get(email=email, password=password)
-        except UserCredential.DoesNotExist:
-            raise Http404("Invalid email or password.")
-
-        if user is not None:
-            login(request, user)
-            return render(request, 'stats.html', {'userId': user.id})
-        return render(request, 'login.html')
-
-class SignupView(View):
-
-    def get(self, request):
-        form = SignUpForm()
-        return render(request, 'signup.html', {'form': form})
-
-    def post(self, request):
-        form = SignUpForm(request.POST)
-        if form.is_valid():
-            form.save()
-            email = form.cleaned_data.get('email')
-            raw_data = form.cleaned_data.get('password')
-            user = authenticate(email=email, password=raw_data)
-            login(request, user)
-            return render(request, 'stats.html')
-
-
-class StatsView(View):
-    user_id = ''
+class ProfileView(View):
     
     def get(self, request):
-        user_id = request.GET.get('userId')
+        current_user = request.user
+        user_id = current_user.id
+
+        profile = Profile.objects.filter(user=user_id)
+
+class StatsView(View):
+    
+    def get(self, request):
+        current_user = request.user
+        user_id = current_user.id
 
         try:
-            profile = Profile.objects.get(user=user_id)
+            profile = Profile.objects.filter(user=user_id)
+
         except Profile.DoesNotExist:
-            raise Http404("User does not exist.")       
-        return render(request, 'stats.html', {
-            'bench': profile.bench,
-            'squat': profile.squat,
-            'deadlift': profile.deadlift
-        })
+            raise Http404("User does not exist.")  
+
+        return HttpResponse(sz.serialize('json', profile), content_type='application/json')
+
+class UserExerciseView(View):
+
+    def post(self, request):
+        current_user = request.user
+        user_id = current_user.id

@@ -7,8 +7,7 @@ from flexapp.views import *
 
 urlpatterns = [
     path('accounts/', include('django.contrib.auth.urls')),
-    path('login/', LoginView.as_view(), name='login'),
-    path('signup/', SignupView.as_view(), name='signup'),
+    path('signup/', SignUpView.as_view(), name='signup'),
     path('stats/', StatsView.as_view(), name='stats'),
 
 ]

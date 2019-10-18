@@ -1,16 +1,8 @@
 from django.db import models
+from django.contrib.auth.models import User
+
 
 # Create your models here.
-class UserCredential(models.Model):
-
-    email = models.EmailField(max_length=50, unique=True)
-    #userName = models.CharField(max_length=50, unique=True)
-    password = models.CharField(max_length=50)
-    creation_date = models.DateTimeField(auto_now_add=True)
-
-    def __str__(self):
-        return self.email
-
 class Profile(models.Model):
 
     name = models.CharField(max_length=50)
@@ -21,7 +13,7 @@ class Profile(models.Model):
     squat = models.DecimalField(max_digits=6, decimal_places=2)
     deadlift = models.DecimalField(max_digits=6, decimal_places=2)
     flexScore = models.IntegerField()
-    user = models.ForeignKey(UserCredential, on_delete=models.SET_NULL, blank=True, null=True)
+    user = models.OneToOneField(User, on_delete = models.CASCADE, primary_key=True)
 
     def __str__(self):
         return self.user.email
