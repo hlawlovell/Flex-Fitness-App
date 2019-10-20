@@ -20,8 +20,6 @@ class SignUpView(View):
         username = request.POST.get("username")
         password = request.POST.get("password")
 
-        if username.
-
 
 class ProfileView(View):
     
