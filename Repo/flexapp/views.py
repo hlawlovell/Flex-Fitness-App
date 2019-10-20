@@ -13,10 +13,15 @@ from .models import *
 from .serializers import *
 
 # Create your views here.
-class SignUpView(generic.CreateView):
-    form_class = UserCreationForm
-    success_url = reverse_lazy('login')
-    template_name = 'signup.html'
+class SignUpView(View):
+    
+    def post(self, request):
+        
+        username = request.POST.get("username")
+        password = request.POST.get("password")
+
+        if username.
+
 
 class ProfileView(View):
     
