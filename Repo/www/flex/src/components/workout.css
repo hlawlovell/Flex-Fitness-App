@@ -1,0 +1,33 @@
+#workoutWrap{
+    max-width:1600px !important;
+}
+
+#daySelect{
+    text-align: center;
+    width:80%;
+    max-width:1000px;
+    margin: auto;
+    position: relative;
+
+}
+
+.arrow{
+    font-size: 3em;
+    margin-top:0.19em;
+}
+.left{
+    float:left;
+}
+.right{
+    float:right;
+}
+
+.arrow:hover{
+    cursor:pointer !important;
+    -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+     -khtml-user-select: none; /* Konqueror HTML */
+       -moz-user-select: none; /* Old versions of Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+            user-select: none; 
+}
