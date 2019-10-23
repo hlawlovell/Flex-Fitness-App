@@ -11,6 +11,7 @@ from django.contrib.auth.forms import UserCreationForm
 
 from .models import *
 
+
 class SignUpView(View):
 
     #Register a new user
