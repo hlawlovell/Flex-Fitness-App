@@ -3,11 +3,10 @@ FLEXapp project views details
 """
 
 from django.views import View
-from django.views import generic
-from django.urls import reverse_lazy
-from django.core import serializers as sz
+from django.shortcuts import redirect, render
+from django.contrib import messages
 from django.contrib.auth.forms import UserCreationForm
-from django.http import Http404, HttpResponse
+from django.contrib.auth.decorators import login_required
 
 from .models import *
 from .serializers import *
@@ -17,34 +16,48 @@ class SignUpView(View):
     
     def post(self, request):
         
-        username = request.POST.get("username")
-        password = request.POST.get("password")
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            profile = Profile(user = user)
+            profile.save()
+            messages.success(request, 'Successful registraion. You can now log in.')
+            return redirect('login')
 
+    def get(self, request):
+        form = UserCreationForm()
+        return render(request, 'signup', {'form': form})
 
+@login_required
 class ProfileView(View):
     
     def get(self, request):
         current_user = request.user
-        user_id = current_user.id
+        profile = Profile.objects.filter(user=current_user)
+        if profile is None:
+            profile = Profile(user=current_user)
+            profile.save()
+        response = {
+            'profile': profile,
+            'user': current_user
+        }
+        return render(request, 'profile', response) 
 
-        profile = Profile.objects.filter(user=user_id)
-
+@login_required
 class StatsView(View):
     
     def get(self, request):
         current_user = request.user
-        user_id = current_user.id
+        profile = Profile.objects.filter(user=current_user)
+        if profile is None:
+            profile = Profile(user=current_user)
+            profile.save()
+        response = {
+            'profile': profile
+        }
+        return render(request, 'stats', response) 
 
-        try:
-            profile = Profile.objects.filter(user=user_id)
-
-        except Profile.DoesNotExist:
-            raise Http404("User does not exist.")  
-
-        return HttpResponse(sz.serialize('json', profile), content_type='application/json')
-
+@login_required
 class UserExerciseView(View):
 
     def post(self, request):
-        current_user = request.user
-        user_id = current_user.id
