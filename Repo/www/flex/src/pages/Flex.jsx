@@ -1,6 +1,6 @@
 import React from "react"
 import MetaTags from 'react-meta-tags';
-import { Container, Row, Col } from "react-bootstrap";
+import { Container, Row } from "react-bootstrap";
 import Chart from '../components/Chart'
 import Nav from '../components/nav'
 import '../components/common.css'
@@ -9,6 +9,8 @@ import Logo from '../components/Logo';
 
 
 const Flex = () => {
+
+
     return (
         <div className="wrapper">
           <MetaTags>
@@ -22,21 +24,7 @@ const Flex = () => {
             <Row id="homeRow2">
             </Row>
             <Row id="homeRow3">
-              <Col></Col>
-              <Col xs={12} id="scoreWrapper">
-                <h1>200</h1>
-                <Row id="flexScores">
-                    <Col><h2>200</h2></Col>
-                    <Col><h2>200</h2></Col>
-                    <Col><h2>200</h2></Col>
-                  </Row>
-                </Col>
-              <Col></Col>
-            </Row>
-            <Row id="homeRow4">
-              <div id="chartContain">
-                <div id="chartWrap"><Chart /></div>
-              </div>
+              <Chart />
             </Row>
             <Row id="homeRow5">
               <Nav  selected={"home"}/>
