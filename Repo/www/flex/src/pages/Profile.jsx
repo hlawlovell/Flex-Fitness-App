@@ -1,65 +1,84 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {Helmet} from "react-helmet";
 import Nav from '../components/nav'
 import styled from "styled-components";
 import '../components/common.css';
 import Logo from '../components/Logo';
 import GenericDisplay from '../images/genericDisplay.png';
+import axios from 'axios';
 
-const changeButtonStyle = {
-  fontSize: 44,
-  width: '50%',
-  opacity: 0,
-  display: 'none'
-};
+const ChangeButton = styled.button`
+  fontSize: 44;
+  width: 50%;
+  opacity: 0;
+  display: none;
+`;
 
 const Button = styled.button`
   font-size: 15px;
-  width: 47.5%;
+  font-weight: 400;
+  color: white;
+  background: none;
+  border-color: #1A2227;
+  text-decoration: none;
+  width: 25%; 
+  text-align: center;
+  border-radius: 40px;
+  margin-left: 11%;
+
+  & span {
+    color: #0000ff;
+    cursor: pointer;
+  }
+  :hover {
+    background-color: white;
+    border-color: white;
+    color: #1A2227;
+  }
 `;
 
 const DisplayPhoto = styled.img`
-  height: 40px;
+  height: 60px;
 `;
 
-const labelStyle = {
-  width: '100%',
-  textAlign: 'center'
-}
+const ChangeButtonLabel = styled.label`
+  width: 100%;
+  text-Align: center;
+`;
 
 const FormElements = styled.div`
   display: flex;
   flex-direction: column;
-  margin-left: 30%;
+  margin-left: 35%;
 `;
 
-const bigInfoBox = {
-  width: '50%',
-  height: '25px',
-  border: 'solid 1px black',
-  background:'white'
-}
+const LongInfoBox = styled.div`
+  width: 50%;
+  height: 25px;
+  border: solid 1px black;
+  background: white;
+`;
 
 const LongInput = styled.input`
   width: 50%;
   height: 25px;
-  border: solid 1px black;,
-  background:'white'
+  border: solid 1px black;
+  background:'white';
   flex-direction: column;
 `;
 
-const smallInfoBox = {
-  width: '100%',
-  height: '25px',
-  border: 'solid 1px black',
-  background:'white'
-}
+const ShortInfoBox = styled.div`
+  width: 100%;
+  height: 25px;
+  border: solid 1px black;
+  background: white;
+`;
 
 const ShortInput = styled.input`
   width: 100%;
   height: 25px;
-  border: solid 1px black;,
-  background:'white'
+  border: solid 1px black;
+  background: white;
 `;
 
 const EmptySpace = styled.div`
@@ -68,7 +87,7 @@ const EmptySpace = styled.div`
 `;
 
 const Label = styled.label`
-  font-size: 10px;
+  font-size: 15px;
   margin-top: 10px;
 `;
 
@@ -85,6 +104,23 @@ const SmallBoxContainer = styled.div`
   width: 20%;
 `;
 
+const Update = (name, email, password, height, weight) => {
+  axios
+    .put('http://localhost:3000/profiles/', {
+      name,
+      email,
+      password,
+      height,
+      weight
+    })
+    .then();
+}
+
+const Logout = () => {
+    localStorage.clear();
+    window.location.href = '/';
+}
+
 const Profile = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -93,6 +129,16 @@ const Profile = () => {
   const [weight, setWeight] = useState("");
   const [updating, setUpdating] = useState(false);
   
+
+  useEffect(() => {
+    axios.get('http://localhost:3000/profiles/').then(response => {
+      setName(response.name);
+      setEmail(response.email);
+      setPassword(response.password);
+      setHeight(response.height);
+      setWeight(response.weight);
+    });
+  }, []);
 
   return (
       <div>
@@ -106,11 +152,11 @@ const Profile = () => {
             {/*Page Content*/}
             <Logo />
 
-            <label for="pic_upload" style={labelStyle}> 
+            <ChangeButtonLabel for="pic_upload"> 
               <DisplayPhoto src={GenericDisplay} />
               <span style={{ color:'rgb(192, 192, 192)', display: 'block'}}>change</span> 
-            </label> 
-            <input id="pic_upload" style={changeButtonStyle} type="file" accept="image/*" name="display_pic"/>
+            </ChangeButtonLabel> 
+            <ChangeButton id="pic_upload" type="file" accept="image/*" name="display_pic"/>
 
         {updating ? (
           <div>
@@ -183,7 +229,7 @@ const Profile = () => {
                 <Button
                   onClick={() => {
                     setUpdating(false);
-                    // update(name, email, password, height, weight);
+                    Update(name, email, password, height, weight);
                   }}
                 >Save
                 </Button>
@@ -197,36 +243,54 @@ const Profile = () => {
               <FormElements>
                 
                 <Label for="name"> Name</Label>
-                <div id="name" style={bigInfoBox}></div>
+                <LongInfoBox 
+                  id="name"
+                  value={name}
+                />
 
                 <Label for="email"> Email</Label>
-                <div id="email" style={bigInfoBox}></div>
+                <LongInfoBox 
+                  id="email"
+                  value={email}
+                />
 
                 <Label for="password" > Password</Label>
-                <div id="password" style={bigInfoBox}></div>
+                <LongInfoBox 
+                  id="password"
+                  value={password}
+                />
 
 
                 <SmallBoxWrapper>
                   <SmallBoxContainer>
                     <Label for="height" > Height(cm)</Label>
-                    <div id="height" style={smallInfoBox}></div>
+                    <ShortInfoBox 
+                      id="height"
+                      value={height}
+                    />
                   </SmallBoxContainer>
 
                   <EmptySpace/>
 
                   <SmallBoxContainer>
                     <Label for="weight" > Weight(kg)</Label>
-                    <div id="weight" style={smallInfoBox}></div>
+                    <ShortInfoBox id="weight"></ShortInfoBox>
                   </SmallBoxContainer>
                 </SmallBoxWrapper>
                 <Button
                   onClick={() => {
                     setUpdating(true);
                   }}
+                  style={{marginTop: '10px'}}
                 >Update
                 </Button>
                 
-                <Button>Log Out</Button>
+                <Button
+                  style={{marginTop: '10px'}}
+                  onClick={() => {
+                    Logout();
+                  }}
+                >Log Out</Button>
                 
               </FormElements>
         </div>
@@ -237,10 +301,6 @@ const Profile = () => {
         <Nav  selected={"profile"}/>
             </Container-fluid>
       </div>
-      
-      
-   
-
   );
 };
 
