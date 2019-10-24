@@ -15,7 +15,7 @@ const Login = () => (
       <Form.Label>Password</Form.Label>
       <Form.Control type="password" placeholder="Password" />
     </Form.Group>
-    <Button className="formButton" variant="primary" type="submit" href="/home">
+    <Button className="formButton" variant="primary" type="submit" href="/flex">
       Login
     </Button>
     <Button className="formButton" variant="primary" type="submit" href="/register">

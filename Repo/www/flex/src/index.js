@@ -5,7 +5,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import Landing from "./pages/Landing";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
-import Home from "./pages/Flex";
+import Flex from "./pages/Flex";
 import Workout from "./pages/Workout";
 import Profile from "./pages/Profile";
 import './index.css';
@@ -15,7 +15,7 @@ ReactDOM.render(
     <Landing path="/" />
     <Login path="/login" />
     <Register path="/register" />
-    <Home path="/flex" />
+    <Flex path="/flex" />
     <Workout path="/workout" />
     <Profile path="/profile" />
   </Router>,

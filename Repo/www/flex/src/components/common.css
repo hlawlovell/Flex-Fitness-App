@@ -2,6 +2,7 @@
     background: #1A2227;
     padding: 0;
   }
+  
   .wrapper{
     position:fixed;
     width:100%;
@@ -18,11 +19,12 @@
       background: none !important;
       width:90%;
       margin:auto;
+      max-width:1800px;
   }
   .navbar a {
     float: left;
     padding: 5px;
-    color: rgb(50, 128, 131);
+    color: rgb(60, 150, 153);
     text-decoration: none;
     font-size: 20px;
     font-weight: 400;
@@ -30,15 +32,17 @@
     text-align: center;
     border-radius: 40px;
     margin: auto;
+    max-width:400px;
   }
   
   .navbar a:hover {
     background-color: rgb(50, 128, 131);
+    color:white;
   }
   
   .navbar a.active {
     background-color:#4AB5B8;
-    color:#1A2227;
+    color:white;
   }
 
   @media screen and (max-width: 500px) {

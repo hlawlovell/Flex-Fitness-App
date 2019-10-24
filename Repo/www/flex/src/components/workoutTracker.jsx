@@ -23,35 +23,53 @@ const dayViewWrapStyle = {
     return <td key={props.data[key]}>{props.data[key]}</td>
     })
 }
-  
+
+const myDate = new Date();
+
+const Days = [
+    "Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"
+]
+
 class WorkoutTracker extends Component{
     constructor(props){
         super(props);
         this.state = {
-            currentView:"Today"
+            date: Days[myDate.getDay()]+" - "+myDate.getDate()+"/"+myDate.getMonth()+"/"+myDate.getFullYear(),
+            exercises: ["Deadlift","Pushups","SitUps"]
         }
     }
 
     previousDay = () => {
-        this.setState({ currentView: "previous" });
+        var d = myDate;
+        d.setDate(d.getDate() - 1);
+        this.setState({ date: Days[d.getDay()]+" - "+d.getDate()+"/"+d.getMonth()+"/"+d.getFullYear(),
+                        exercises:[
+                            "Squats","Bench","Jumps"
+                        ]});
      };
 
      nextDay = () => {
-        this.setState({ currentView: "Next" });
-     };
+        var d = myDate;
+        d.setDate(d.getDate() + 1);
+        this.setState({ date: Days[d.getDay()]+" - "+d.getDate()+"/"+d.getMonth()+"/"+d.getFullYear(),
+        exercises:[
+            "Lunges","Chinups","Kicking"
+        ]});
+};
 
 
     render(){
+        const items = this.state.exercises.map(function(item){
+            return <ListGroup.Item> {item} </ListGroup.Item>;
+          });
         return(
             <div className="WorkoutTracker">
                 <Container id="workoutWrap" style={workoutWrapStyle}>
                     <div id="workouts" style={dayViewWrapStyle}>
                     <ListGroup>
-                    <ListGroup.Item><div id="daySelect"><a className={classNames("arrow","left","fa fa-chevron-left fa-lg")} onClick={this.previousDay}></a>{this.state.currentView}<a className={classNames("arrow","right","fa fa-chevron-right fa-lg")}   onClick={this.nextDay}></a></div></ListGroup.Item>
-                    <ListGroup.Item>consectetur</ListGroup.Item>
-                    <ListGroup.Item> consectetur</ListGroup.Item>
-                    <ListGroup.Item>Porta ac consectetur ac</ListGroup.Item>
-                    <ListGroup.Item>Vestibulum at eros</ListGroup.Item>
+                    <ListGroup.Item><div id="daySelect"><a className={classNames("arrow","left","fa fa-chevron-left fa-lg")} 
+                                    onClick={this.previousDay}></a>{this.state.date}<a className={classNames("arrow","right","fa fa-chevron-right fa-lg")}   onClick={this.nextDay}></a></div></ListGroup.Item>
+                    {items}
                     </ListGroup>
                     </div>
                 </Container> 

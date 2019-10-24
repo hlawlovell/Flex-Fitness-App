@@ -10,13 +10,13 @@ import Logo from '../components/Logo';
 
 const Flex = () => {
     return (
-        <div class="wrapper">
+        <div className="wrapper">
           <MetaTags>
             <title>Page 1</title>
             <meta name="viewport" content="width=device-width, initial-scale=1" />
             <link href="https://fonts.googleapis.com/css?family=Quicksand&display=swap" rel="stylesheet" />
           </MetaTags>
-          <div class="content"> 
+          <div className="content"> 
           <Logo />
           <Container>
             <Row id="homeRow2">
