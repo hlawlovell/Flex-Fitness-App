@@ -28,7 +28,6 @@ class UserExercise(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
     exercise = models.ForeignKey(Exercise, on_delete=models.CASCADE)
     date = models.DateField(auto_now_add=True)
-    sets = models.PositiveSmallIntegerField(null=True)
 
     def __str__(self):
         return self.date

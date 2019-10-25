@@ -9,10 +9,11 @@ from django.contrib import messages
 from django.contrib.auth import login
 from django.contrib.auth.forms import UserCreationForm
 from rest_framework.response import Response
+from rest_framework.views import APIView
 
 from .models import *
 
-class SignUpView(View):
+class SignUpView(APIView):
 
     #Register a new user
     def post(self, request):
@@ -33,6 +34,7 @@ class SignUpView(View):
             form = UserCreationForm()
             response = {
                 'created': False,
+                'message': 'Invalid Input',
             }
             return Response(response)
 
@@ -45,7 +47,7 @@ class SignUpView(View):
         }
         return Response(response)
 
-class ProfileView(View):
+class ProfileView(APIView):
     #Get user profile
     def get(self, request):
         current_user = request.user
@@ -76,7 +78,7 @@ class ProfileView(View):
         }
         return Response(response)
 
-class StatsView(View):
+class StatsView(APIView):
 
     #The home view, which is the stats view
     def get(self, request):
@@ -90,7 +92,7 @@ class StatsView(View):
         }
         return Response(response)
 
-class DashboardView(View):
+class DashboardView(APIView):
 
     #Get user exercises by date
     def get(self, request, year=d.year, month=d.month, day=d.day):
@@ -102,7 +104,7 @@ class DashboardView(View):
         }
         return Response(response)
 
-class UserExerciseView(View):
+class UserExerciseView(APIView):
 
     #Get user exercise by id
     def get(self, request, id=0):
