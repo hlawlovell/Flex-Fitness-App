@@ -1,4 +1,5 @@
 from django.db import models
+from django.utils import timezone
 
 # Create your models here.
 class UserCredential(models.Model):
@@ -7,7 +8,7 @@ class UserCredential(models.Model):
     #userName = models.CharField(max_length=50, unique=True)
     password = models.CharField(max_length=50)
     creation_date = models.DateTimeField(auto_now_add=True)
-
+    
     def __str__(self):
         return self.email
 
@@ -29,12 +30,20 @@ class Exercise(models.Model):
     name = models.CharField(max_length=50)
     isModifiable = models.BooleanField(default=False)
 
+    def __str__(self):
+        return self.name
+
 class UserExercise(models.Model):
     exercise = models.ForeignKey(Exercise, on_delete=models.CASCADE)
     date = models.DateField(auto_now_add=True)
     set = models.PositiveSmallIntegerField(null=True)
 
+    def __str__(self):
+        return self.exercise.name
+
 class LogEntries(models.Model):
     exercise = models.ForeignKey(UserExercise, on_delete=models.CASCADE)
-    weight = models.DecimalField(max_digits=3, decimal_places=2)
+    weight = models.DecimalField(max_digits=5, decimal_places=2)
     reps = models.PositiveSmallIntegerField(null=True)
+    def __str__(self):
+        return self.exercise.exercise.name

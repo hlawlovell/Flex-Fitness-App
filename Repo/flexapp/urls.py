@@ -10,5 +10,6 @@ urlpatterns = [
     path('login/', LoginView.as_view(), name='login'),
     path('signup/', SignupView.as_view(), name='signup'),
     path('stats/', StatsView.as_view(), name='stats'),
-
+    path('flexcard/', FlexCardView.as_view(), name='flexcard'),
+    path('profile/', ProfileView.as_view(), name='profile')
 ]

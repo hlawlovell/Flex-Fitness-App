@@ -7,6 +7,10 @@ from django.views import View
 from django.contrib.auth import login, authenticate
 
 from rest_framework import viewsets
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework.renderers import JSONRenderer
+
 
 from .models import *
 from .serializers import *
@@ -70,3 +74,42 @@ class StatsView(View):
             'squat': profile.squat,
             'deadlift': profile.deadlift
         })
+
+class ProfileView(APIView):
+    # serializer = ProfileSerializer
+    # queryset = Profile.objects.all()
+    def get(self, request):
+        user_id = self.request.user.id
+        Profile
+        serializer = UserCredentialSerializers(user, many=False)
+        return Response(serializer.data)
+
+
+class FlexCardView(APIView):
+    def get(self, request):
+
+        # Return 6 {bench, squat, deadlift} objects
+        bench = FlexSerializer(LogEntries.objects.filter(exercise__exercise__name='Bench').order_by('-id')[:6], many=True)
+        squat = FlexSerializer(LogEntries.objects.filter(exercise__exercise__name='Squat').order_by('-id')[:6], many=True)
+        deadlift = FlexSerializer(LogEntries.objects.filter(exercise__exercise__name='Deadlift').order_by('-id')[:6], many=True)
+
+        bench_orm = get_orm(bench.data)
+        squat_orm = get_orm(squat.data)
+        deadlift_orm = get_orm(deadlift.data)
+
+        content = {"bench" : bench_orm, "squat" : squat_orm, "deadlift" : deadlift_orm}
+        return Response(content)
+        
+# Calculate one rep max
+def get_orm(sets):
+    orm_list = []
+    for i in sets:
+        weight = float(i.get("weight"))
+        reps = i.get("reps")
+        if reps == 1:
+            orm_list.append(int(weight))
+            continue
+        orm = int(weight * (1+reps/30.0))
+        orm_list.append(orm)
+    return orm_list
+
