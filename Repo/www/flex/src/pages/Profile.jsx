@@ -44,6 +44,7 @@ const DisplayPhoto = styled.img`
 const ChangeButtonLabel = styled.label`
   width: 100%;
   text-Align: center;
+  margin-left: 0.5%;
 `;
 
 const FormElements = styled.div`
