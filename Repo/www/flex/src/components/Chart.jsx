@@ -2,6 +2,7 @@ import React, {Component} from "react"
 import {Line} from 'react-chartjs-2';
 import { Container, Row, Col } from "react-bootstrap";
 import '../components/Home.css'
+import axios from 'axios';
 
 
 class Chart extends Component{
@@ -9,12 +10,12 @@ class Chart extends Component{
         super(props);
         this.state = {
             chartData:{
-                labels: ["January", "February", "March", "April", "May", "June", "July"],
+                labels: ["", "", "", "", "", "", ""],
                 datasets: [{
-                label: "",
-                backgroundColor: 'rgb(86, 199, 201)',
-                borderColor:'white',
-                data: [195,200,200,205,205,207,210,210],
+                    label: "",
+                    backgroundColor: 'rgb(86, 199, 201)',
+                    borderColor:'white',
+                    data: [195,200,200,205,205,207,210,210],
                 }]     
             }
         }
@@ -23,7 +24,7 @@ class Chart extends Component{
     loadSquats = () => {
         this.setState({
             chartData:{
-                labels: ["January", "February", "March", "April", "May", "June", "July"],
+                labels: ["", "", "", "", "", "", ""],
                 datasets: [{
                 label: "",
                 backgroundColor: 'rgb(170, 106, 198)',
@@ -36,7 +37,7 @@ class Chart extends Component{
     loadBench = () => {
         this.setState({
             chartData:{
-                labels: ["January", "February", "March", "April", "May", "June", "July"],
+                labels: ["", "", "", "", "", "", ""],
                 datasets: [{
                 label: "",
                 backgroundColor: 'rgb(247, 122, 140)',
@@ -49,7 +50,7 @@ class Chart extends Component{
     loadDeads = () => {
         this.setState({
             chartData:{
-                labels: ["January", "February", "March", "April", "May", "June", "July"],
+                labels: ["", "", "", "", "", "", ""],
                 datasets: [{
                 label: "",
                 backgroundColor: 'rgb(119, 183, 219)',
@@ -62,7 +63,7 @@ class Chart extends Component{
     loadFlex = () => {
         this.setState({
             chartData:{
-                labels: ["January", "February", "March", "April", "May", "June", "July"],
+                labels: ["", "", "", "", "", "", ""],
                 datasets: [{
                 label: "",
                 backgroundColor: 'rgb(86, 199, 201)',

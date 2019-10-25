@@ -63,7 +63,7 @@ const Register = () => {
           }}
         />
       </Form.Group>
-      <Button variant="primary" type="submit" href="/home"
+      <Button variant="primary" type="submit" href="/flex"
         onClick={() => {
           RegisterInfo(email, password1, password2)
         }}

@@ -8,7 +8,6 @@ import Register from "./pages/Register";
 import Flex from "./pages/Flex";
 import Workout from "./pages/Workout";
 import Profile from "./pages/Profile";
-import './index.css';
 
 ReactDOM.render(
   <Router>
