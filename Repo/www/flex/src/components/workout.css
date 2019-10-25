@@ -81,3 +81,16 @@
     padding-right:10px;
     font-weight: bold;
 }
+
+/*Add exercise popup*/
+#adButton{
+    cursor:pointer;
+}
+#exerciseDropdown{
+    min-width:300px;
+    margin-left:5px;
+}
+button{
+    float:right;
+    margin-right:10px;
+}

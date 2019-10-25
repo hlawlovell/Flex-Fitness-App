@@ -1,6 +1,7 @@
 import React, {Component} from "react"
 import { Container, ListGroup } from "react-bootstrap";
 import '../components/workout.css'
+import App from '../components/newExercise.jsx'
 import classNames from 'classnames';
 import 'font-awesome/css/font-awesome.min.css';
 
@@ -96,7 +97,7 @@ class WorkoutTracker extends Component{
                         </ListGroup>
                     </div>
                     <div id="adButtonWrap">
-                        <a id="adButton" className={classNames("fa fa-plus fa-3x")}></a>
+                        <App />
                     </div>
                 </Container> 
             </div>
