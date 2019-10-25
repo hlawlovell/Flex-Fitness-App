@@ -2,7 +2,6 @@ import React, {Component} from "react"
 import {Line} from 'react-chartjs-2';
 import { Container, Row, Col } from "react-bootstrap";
 import '../components/Home.css'
-import axios from 'axios';
 
 
 class Chart extends Component{
@@ -76,7 +75,7 @@ class Chart extends Component{
 
     render(){
         return(
-            <Container id = "flexModuleWrap">
+            <Container id="flexModuleWrap">
                 <Row  id="scoreRow">
                     <Col>
                         <h1 onClick={this.loadFlex}>210</h1>

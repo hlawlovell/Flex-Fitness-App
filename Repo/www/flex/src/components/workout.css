@@ -8,7 +8,12 @@
     max-width:1000px;
     margin: auto;
     position: relative;
-
+    font-size:1.5em;
+}
+@media (max-width: 600px){
+    #daySelect {
+        font-size:1em;
+    }
 }
 
 .arrow{
@@ -38,6 +43,14 @@
     display: inline-block;
 
 }
+
+
+.listHidden{
+    display:none;
+}
+
+
+
 #daySelect, .arrow{
     -webkit-touch-callout: none; /* iOS Safari */
     -webkit-user-select: none; /* Safari */
@@ -45,4 +58,26 @@
        -moz-user-select: none; /* Old versions of Firefox */
         -ms-user-select: none; /* Internet Explorer/Edge */
             user-select: none; 
+}
+
+/*LIST ITEMS*/
+.exerciseWrapper{
+    max-width:1000px;
+    margin:auto;
+    font-size:1.5em;
+}
+@media (max-width: 600px){
+    .exerciseWrapper {
+        font-size:1em;
+    }
+}
+.exerciseTitle{
+}
+.exerciseWeight{
+    float:right;
+}
+.exerciseReps{
+    float:right;
+    padding-right:10px;
+    font-weight: bold;
 }

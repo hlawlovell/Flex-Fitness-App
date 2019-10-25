@@ -30,8 +30,23 @@ class WorkoutTracker extends Component{
         super(props);
         this.state = {
             date: Days[myDate.getDay()]+" - "+myDate.getDate()+"/"+myDate.getMonth()+"/"+myDate.getFullYear(),
-            exercises: [["Deadlift","200","3"],["Pushups","12","20"],["SitUps","0","20"]]
+            exercises: [
+                {
+                    exercise: 'bench',
+                    weight: '100',
+                    reps: '5',
+                },
+                {
+                    exercise: 'squat',
+                    weight: '200',
+                    reps: '3',
+                },
+              ]
         }
+    }
+
+    test = () => {
+
     }
 
     previousDay = () => {
@@ -50,11 +65,24 @@ class WorkoutTracker extends Component{
         exercises:[
             "Lunges","Chinups","Kicking"
         ]});
-};
+    };
+
 
 
     render(){
+        
         const items = this.state.exercises.map(function(item){
+            
+            return(
+                <ListGroup.Item><div  className="exerciseWrapper">
+                    <a className="exerciseTitle">{item.exercise}</a>
+                    <a className="exerciseWeight">{item.weight}</a>
+                    <a className="exerciseReps">{item.reps}</a>
+                    </div></ListGroup.Item>
+                );
+          });
+
+        const item = this.state.exercises.map(function(item){
             return <ListGroup.Item> {item} </ListGroup.Item>;
           });
         return(
