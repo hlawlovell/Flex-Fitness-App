@@ -8,9 +8,9 @@ from django.shortcuts import redirect, render
 from django.contrib import messages
 from django.contrib.auth import login
 from django.contrib.auth.forms import UserCreationForm
+from rest_framework.response import Response
 
 from .models import *
-
 
 class SignUpView(View):
 
@@ -23,20 +23,27 @@ class SignUpView(View):
             profile.save()
             messages.success(request, 'Successful registraion. You can now log in.')
             response = {
+                'created': True,
                 'user':user,
                 'profile': profile
             }
-            login(request, user)
-            return render(request, 'stats.html', response)
+            return Response(response)
         else:
             messages.error(request, 'Invalid values.')
             form = UserCreationForm()
-            return render(request, 'signup.html', {'form': form})
+            response = {
+                'created': False,
+            }
+            return Response(response)
 
     #Render the sign up page
     def get(self, request):
         form = UserCreationForm()
-        return render(request, 'signup.html', {'form': form})
+        response = {
+            'created': False,
+            'form': form
+        }
+        return Response(response)
 
 class ProfileView(View):
     #Get user profile
@@ -50,7 +57,7 @@ class ProfileView(View):
             'profile': profile,
             'user': current_user
         }
-        return render(request, 'profile.html', response)
+        return Response(response)
 
     #Update user profile
     def post(self, request):
@@ -67,7 +74,7 @@ class ProfileView(View):
         response = {
             'profile': profile
         }
-        return render(request, 'profile.html', response)
+        return Response(response)
 
 class StatsView(View):
 
@@ -81,7 +88,7 @@ class StatsView(View):
         response = {
             'profile': profile
         }
-        return render(request, 'stats.html', response)
+        return Response(response)
 
 class DashboardView(View):
 
@@ -93,7 +100,7 @@ class DashboardView(View):
         response = {
             'user_exercises': user_exercise
         }
-        return render(request, 'dashboard.html', response)
+        return Response(response)
 
 class UserExerciseView(View):
 
@@ -107,7 +114,7 @@ class UserExerciseView(View):
         response = {
             'userexercise': user_exercise
         }
-        return render(request, 'userexercise.html', response)
+        return Response(response)
 
     #delete user exercise by id
     def delete(self, request, id=0):
@@ -118,7 +125,11 @@ class UserExerciseView(View):
             raise Http404('User exercise not found.')
         user_exercise.delete()
         messages.success(request, 'Successful deletion.')
-        return redirect('userexercise.html', date = user_exercise.date)
+        response = {
+            'deleted': True,
+            'user_exercise': user_exercise,
+        }
+        return Response(response)
 
     #Update existing user exercise, or create a new one if does not exist
     def post(self, request, id=0):
@@ -132,4 +143,8 @@ class UserExerciseView(View):
         user_exercise.date = request.POST['date']
         user_exercise.save()
         messages.success(request, 'User exercise created.')
-        return redirect('dashboard.html', date=user_exercise.date)
+        response = {
+            'created': True,
+            'user_exercise': user_exercise,
+        }
+        return Response(response)
