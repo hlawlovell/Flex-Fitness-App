@@ -76,60 +76,47 @@ class Chart extends Component{
 
     render(){
         return(
-            <Container>
-                <Row>
-                <Col></Col>
-                <Col s={12} id="scoreWrapper">
-              <h1 onClick={this.loadFlex}>210</h1>
-              <Row id="flexScores">
-                  <Col><h2 onClick={this.loadSquats}>210</h2></Col>
-                  <Col><h2 onClick={this.loadBench}>140</h2></Col>
-                  <Col><h2 onClick={this.loadDeads}>280</h2></Col>
+            <Container id = "flexModuleWrap">
+                <Row  id="scoreRow">
+                    <Col>
+                        <h1 onClick={this.loadFlex}>210</h1>
+                        <Row id="flexScores">
+                            <Col><h2 onClick={this.loadSquats}>210</h2></Col>
+                            <Col><h2 onClick={this.loadBench}>140</h2></Col>
+                            <Col><h2 onClick={this.loadDeads}>280</h2></Col>
+                        </Row>
+                    </Col>
                 </Row>
-              </Col>
-            <Col></Col>
-          </Row>
-          <Row>
-            <div id="chartContain">
-              <div id="chartWrap">
+                <Row>
+            <Row id="chartRow">
+              <div id="chartContainer">
                 <div className="lineChart">
-                < Line 
-                    data={this.state.chartData}
-                    options={{
-                        legend:{display:false} ,
-                        layout:{
-                            padding:{
-                                left: 0,
-                                right: 0,
-                                top: 0,
-                                bottom: 0
+                    < Line 
+                        data={this.state.chartData}
+                        options={{
+                            legend:{display:false} ,
+                            layout:{
+                                padding:{left: 0, right: 0, top: 0, bottom: 0}
+                            },
+                            scales: {
+                                xAxes: [{
+                                    gridLines: {drawOnChartArea: true, fontColor: 'white'
+                                    },ticks: {fontColor: 'white'}
+                                }],
+                                yAxes: [{
+                                    gridLines: {drawOnChartArea: false},
+                                    ticks: {fontColor: 'white'}
+                                }]
                             }
-                        },
-                        scales: {
-                            xAxes: [{
-                                gridLines: {
-                                    drawOnChartArea: true,
-                                    fontColor: 'white'
-                                },ticks: {
-                                    fontColor: 'white'
-                                }
-                            }],
-                            yAxes: [{
-                                gridLines: {
-                                    drawOnChartArea: false
-                                    
-                                },
-                                ticks: {
-                                    fontColor: 'white'
-                                }
-                            }]
                         }
                     }
-                }
-                />
+                    />
+                </div>
             </div>
-            </div>
-            </div>
+            </Row>
+        </Row>
+        <Row>
+            <Col></Col>
         </Row>
         </Container>
         )

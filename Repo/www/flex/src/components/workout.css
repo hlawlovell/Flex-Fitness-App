@@ -26,6 +26,18 @@
     cursor:pointer !important;
 
 }
+
+#adButtonWrap{
+    text-align: center;
+    width:100%;
+}
+
+#adButton{
+    color:rgb(214, 214, 214);
+    padding-top:15px;
+    display: inline-block;
+
+}
 #daySelect, .arrow{
     -webkit-touch-callout: none; /* iOS Safari */
     -webkit-user-select: none; /* Safari */

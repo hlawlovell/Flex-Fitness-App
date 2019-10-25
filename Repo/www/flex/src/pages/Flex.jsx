@@ -7,6 +7,14 @@ import '../components/common.css'
 import '../components/Home.css'
 import Logo from '../components/Logo';
 
+// const load = (date) => {
+//   axios
+//   .post('http://localhost:3000/flexcard/login', {
+//     email,
+//     password,
+//   })
+//   .then();
+// }
 
 const Flex = () => {
 
@@ -26,7 +34,7 @@ const Flex = () => {
             <Row id="homeRow3">
               <Chart />
             </Row>
-            <Row id="homeRow5">
+            <Row id="homeRow4">
               <Nav  selected={"home"}/>
             </Row>
           </Container> 

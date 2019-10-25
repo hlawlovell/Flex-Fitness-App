@@ -1,6 +1,6 @@
 h1{
     font-family: sans-serif;
-    color: white;
+    color: rgb(255, 255, 255);
     text-align: center;
     font-size: 3em;
     font-weight: bold;
@@ -11,12 +11,14 @@ h1:hover{
 @media (min-width: 700px){
     h1 {
         font-size: 4.5em;
+        font-weight: 700;
+        margin:auto;
     }
 }
 
 h2{
     font-family: sans-serif;
-    color: white;
+    color: rgb(194, 194, 194);
     text-align: center;
     font-size: 2.5em;
 }
@@ -36,24 +38,72 @@ h1, h2{
         font-size: 1.5em;
     }
 }
-.row{
-}
 
-#homeRow2{
-    height:10vh;
-}
 #homeRow3{
+    padding-top:5vh;
+    height:70vh;
+    overflow: hidden;
 }
 
-#homeRow4{
-    height:50vh;
-}
+
 @media (min-height: 680px){
     .container {
         max-width: 1740px;
     }
 }
-#chartContain{
+@media (min-width: 1800px){
+    .container {
+        max-width: 1740px;
+    }
+}
+
+
+/*FLEX MODULE CSS*/
+#flexModuleWrap{
+    position: relative;
+    height:100%;
+    padding: 0;
+    width:100%;
+}
+/*scores*/
+#scoreRow{
+    position:relative;
+    width:100%;
+    margin: auto;
+}
+@media (max-width: 420px){
+    #scoreRow {
+        max-width:90%;
+        min-width: 400px;
+        margin:auto;
+        padding: 0px;    
+    }
+}
+@media (max-height: 400px){
+    #scoreRow {
+        font-size:0.7em;   
+    }
+}
+/*chart*/
+#chartRow{
+    position: relative;
+    padding:0;
+    width:100%;
+    height:100%;
+}
+@media (max-height: 455px){
+    .lineChart{
+        max-height: 40vh;
+    }
+}
+#flexScores{
+    max-width: 50vw;
+    min-width:300px;
+    margin:auto;
+    padding-bottom: 5vh;
+
+}
+#chartContainer{
     width:60%;
     min-width: 400px;
     margin:auto;
@@ -64,28 +114,5 @@ h1, h2{
         width:90%;
     }
 }
-#scoreWrapper{
-    min-width: 350px;
-    max-width: 400px;
-    padding-bottom: 10px;
-}
-@media (max-width: 420px){
-    #scoreWrapper {
-        max-width:90%;
-        min-width: 200px;
-        margin:auto;
-        padding-bottom: 0px;
 
-        
-    }
-}
 
-.col{
-    text-align: center;
-}
-
-@media (min-width: 1800px){
-    .container {
-        max-width: 1740px;
-    }
-}

@@ -30,7 +30,7 @@ class WorkoutTracker extends Component{
         super(props);
         this.state = {
             date: Days[myDate.getDay()]+" - "+myDate.getDate()+"/"+myDate.getMonth()+"/"+myDate.getFullYear(),
-            exercises: ["Deadlift","Pushups","SitUps"]
+            exercises: [["Deadlift","200","3"],["Pushups","12","20"],["SitUps","0","20"]]
         }
     }
 
@@ -39,7 +39,7 @@ class WorkoutTracker extends Component{
         d.setDate(d.getDate() - 1);
         this.setState({ date: Days[d.getDay()]+" - "+d.getDate()+"/"+d.getMonth()+"/"+d.getFullYear(),
                         exercises:[
-                            "Squats","Bench","Jumps"
+                            "Bench","Jumps"
                         ]});
      };
 
@@ -61,11 +61,14 @@ class WorkoutTracker extends Component{
             <div className="WorkoutTracker">
                 <Container id="workoutWrap" style={workoutWrapStyle}>
                     <div id="workouts" style={dayViewWrapStyle}>
-                    <ListGroup>
-                    <ListGroup.Item><div id="daySelect"><a className={classNames("arrow","left","fa fa-chevron-left fa-lg")} 
-                                    onClick={this.previousDay}></a>{this.state.date}<a className={classNames("arrow","right","fa fa-chevron-right fa-lg")}   onClick={this.nextDay}></a></div></ListGroup.Item>
-                    {items}
-                    </ListGroup>
+                        <ListGroup>
+                        <ListGroup.Item><div id="daySelect"><a className={classNames("arrow","left","fa fa-chevron-left fa-lg")} 
+                                        onClick={this.previousDay}></a>{this.state.date}<a className={classNames("arrow","right","fa fa-chevron-right fa-lg")}   onClick={this.nextDay}></a></div></ListGroup.Item>
+                        {items}
+                        </ListGroup>
+                    </div>
+                    <div id="adButtonWrap">
+                        <a id="adButton" className={classNames("fa fa-plus fa-3x")}></a>
                     </div>
                 </Container> 
             </div>
