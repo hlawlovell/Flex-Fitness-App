@@ -9,12 +9,12 @@ class Chart extends Component{
         super(props);
         this.state = {
             chartData:{
-                labels: ["January", "February", "March", "April", "May", "June", "July"],
+                labels: ["", "", "", "", "", "", ""],
                 datasets: [{
-                label: "",
-                backgroundColor: 'rgb(86, 199, 201)',
-                borderColor:'white',
-                data: [195,200,200,205,205,207,210,210],
+                    label: "",
+                    backgroundColor: 'rgb(86, 199, 201)',
+                    borderColor:'white',
+                    data: [195,200,200,205,205,207,210,210],
                 }]     
             }
         }
@@ -23,7 +23,7 @@ class Chart extends Component{
     loadSquats = () => {
         this.setState({
             chartData:{
-                labels: ["January", "February", "March", "April", "May", "June", "July"],
+                labels: ["", "", "", "", "", "", ""],
                 datasets: [{
                 label: "",
                 backgroundColor: 'rgb(170, 106, 198)',
@@ -36,7 +36,7 @@ class Chart extends Component{
     loadBench = () => {
         this.setState({
             chartData:{
-                labels: ["January", "February", "March", "April", "May", "June", "July"],
+                labels: ["", "", "", "", "", "", ""],
                 datasets: [{
                 label: "",
                 backgroundColor: 'rgb(247, 122, 140)',
@@ -49,7 +49,7 @@ class Chart extends Component{
     loadDeads = () => {
         this.setState({
             chartData:{
-                labels: ["January", "February", "March", "April", "May", "June", "July"],
+                labels: ["", "", "", "", "", "", ""],
                 datasets: [{
                 label: "",
                 backgroundColor: 'rgb(119, 183, 219)',
@@ -62,7 +62,7 @@ class Chart extends Component{
     loadFlex = () => {
         this.setState({
             chartData:{
-                labels: ["January", "February", "March", "April", "May", "June", "July"],
+                labels: ["", "", "", "", "", "", ""],
                 datasets: [{
                 label: "",
                 backgroundColor: 'rgb(86, 199, 201)',
@@ -75,60 +75,47 @@ class Chart extends Component{
 
     render(){
         return(
-            <Container>
-                <Row>
-                <Col></Col>
-                <Col s={12} id="scoreWrapper">
-              <h1 onClick={this.loadFlex}>210</h1>
-              <Row id="flexScores">
-                  <Col><h2 onClick={this.loadSquats}>210</h2></Col>
-                  <Col><h2 onClick={this.loadBench}>140</h2></Col>
-                  <Col><h2 onClick={this.loadDeads}>280</h2></Col>
+            <Container id="flexModuleWrap">
+                <Row  id="scoreRow">
+                    <Col>
+                        <h1 onClick={this.loadFlex}>210</h1>
+                        <Row id="flexScores">
+                            <Col><h2 onClick={this.loadSquats}>210</h2></Col>
+                            <Col><h2 onClick={this.loadBench}>140</h2></Col>
+                            <Col><h2 onClick={this.loadDeads}>280</h2></Col>
+                        </Row>
+                    </Col>
                 </Row>
-              </Col>
-            <Col></Col>
-          </Row>
-          <Row>
-            <div id="chartContain">
-              <div id="chartWrap">
+                <Row>
+            <Row id="chartRow">
+              <div id="chartContainer">
                 <div className="lineChart">
-                < Line 
-                    data={this.state.chartData}
-                    options={{
-                        legend:{display:false} ,
-                        layout:{
-                            padding:{
-                                left: 0,
-                                right: 0,
-                                top: 0,
-                                bottom: 0
+                    < Line 
+                        data={this.state.chartData}
+                        options={{
+                            legend:{display:false} ,
+                            layout:{
+                                padding:{left: 0, right: 0, top: 0, bottom: 0}
+                            },
+                            scales: {
+                                xAxes: [{
+                                    gridLines: {drawOnChartArea: true, fontColor: 'white'
+                                    },ticks: {fontColor: 'white'}
+                                }],
+                                yAxes: [{
+                                    gridLines: {drawOnChartArea: false},
+                                    ticks: {fontColor: 'white'}
+                                }]
                             }
-                        },
-                        scales: {
-                            xAxes: [{
-                                gridLines: {
-                                    drawOnChartArea: true,
-                                    fontColor: 'white'
-                                },ticks: {
-                                    fontColor: 'white'
-                                }
-                            }],
-                            yAxes: [{
-                                gridLines: {
-                                    drawOnChartArea: false
-                                    
-                                },
-                                ticks: {
-                                    fontColor: 'white'
-                                }
-                            }]
                         }
                     }
-                }
-                />
+                    />
+                </div>
             </div>
-            </div>
-            </div>
+            </Row>
+        </Row>
+        <Row>
+            <Col></Col>
         </Row>
         </Container>
         )
