@@ -16,8 +16,6 @@ const login = (email, password) => {
 }
 
 const Login = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
   
   return (
     <div id="logForm">
