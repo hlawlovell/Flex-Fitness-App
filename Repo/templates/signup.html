@@ -1,8 +1,13 @@
-<div class="signup-form">
-  <h2>Signup a new account</h2>
-  <form>
-    <input type="text" title="email" placeholder="email" />
-    <input type="password" title="password" placeholder="password" />
-    <button type="submit" class="btn">Login</button>
+<!-- templates/signup.html -->
+{% extends 'base.html' %}
+
+{% block title %}Sign Up{% endblock %}
+
+{% block content %}
+  <h2>Sign up</h2>
+  <form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Sign up</button>
   </form>
-</div><!--end log form -->
+{% endblock %}
