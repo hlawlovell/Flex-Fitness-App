@@ -79,7 +79,8 @@ const Login = () => {
         variant="primary" 
         type="submit"
         onClick={e => {
-          login(email, password);
+          //Changed these to values. to get rid of error
+          login(values.email, values.password);
         }}>
         Login
       </Button>

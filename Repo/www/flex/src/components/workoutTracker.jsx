@@ -4,7 +4,7 @@ import '../components/workout.css'
 import App from '../components/newExercise.jsx'
 import classNames from 'classnames';
 import 'font-awesome/css/font-awesome.min.css';
-
+import axios from 'axios';
 
 const dayViewWrapStyle = {
     'paddingTop':'5%',
@@ -30,19 +30,8 @@ class WorkoutTracker extends Component{
     constructor(props){
         super(props);
         this.state = {
-            date: Days[myDate.getDay()]+" - "+myDate.getDate()+"/"+myDate.getMonth()+"/"+myDate.getFullYear(),
-            exercises: [
-                {
-                    exercise: 'bench',
-                    weight: '100',
-                    reps: '5',
-                },
-                {
-                    exercise: 'squat',
-                    weight: '200',
-                    reps: '3',
-                },
-              ]
+            date: Days[myDate.getDay()]+" - "+myDate.getDate()+"/"+(myDate.getMonth()+1)+"/"+myDate.getFullYear(),
+            exercises: []
         }
     }
 
@@ -51,18 +40,28 @@ class WorkoutTracker extends Component{
     }
 
     previousDay = () => {
+        //decrease day by 1
         var d = myDate;
         d.setDate(d.getDate() - 1);
-        this.setState({ date: Days[d.getDay()]+" - "+d.getDate()+"/"+d.getMonth()+"/"+d.getFullYear(),
-                        exercises:[
-                            "Bench","Jumps"
-                        ]});
+        
+        //request data from backend
+        axios.get("http://localhost:8000/dashboard/"+d.getFullYear()+"/"+(myDate.getMonth()+1)+"/"+d.getDate()+"/")
+        .then(res => {
+                const exercises = res.data;
+        })
+        this.setState({ date: Days[d.getDay()]+" - "+d.getDate()+"/"+(myDate.getMonth()+1)+"/"+d.getFullYear(),
+                        exercises:[]});
+        
      };
 
      nextDay = () => {
         var d = myDate;
         d.setDate(d.getDate() + 1);
-        this.setState({ date: Days[d.getDay()]+" - "+d.getDate()+"/"+d.getMonth()+"/"+d.getFullYear(),
+        axios.get("http://localhost:8000/dashboard/"+d.getFullYear()+"/"+(myDate.getMonth()+1)+"/"+d.getDate()+"/")
+
+
+
+        this.setState({ date: Days[d.getDay()]+" - "+d.getDate()+"/"+(myDate.getMonth()+1)+"/"+d.getFullYear(),
         exercises:[
             "Lunges","Chinups","Kicking"
         ]});

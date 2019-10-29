@@ -1,6 +1,8 @@
 import React from 'react';
 import Modal from 'react-modal';
+import classNames from 'classnames';
 import '../components/workout.css'
+import { Container, ListGroup } from "react-bootstrap";
 
 
 const customStyles = {
@@ -30,7 +32,23 @@ class App extends React.Component {
  
     this.state = {
       modalIsOpen: false,
-      exercises: ["bench","squat","deadlift"]
+      exercises: [{
+        "bench":[{
+          5:100,
+          2:100,
+          2:100
+        }]},
+        {"squat":[{
+          5:100,
+          2:100,
+          2:100
+        }]},
+        {"deadlift":[{
+          5:100,
+          2:100,
+          2:100
+        }]
+      }]
     };
  
     this.openModal = this.openModal.bind(this);
@@ -52,6 +70,9 @@ class App extends React.Component {
   closeModal() {
     this.setState({modalIsOpen: false});
   }
+  newType() {
+    this.state.exersises.push()
+  }
 
   handleChange(event) {
     this.setState({value: event.target.value});
@@ -67,6 +88,9 @@ class App extends React.Component {
     const items = this.state.exercises.map(function(item){
       return(<option value={item}>{item}</option>);
     });
+    const entries = this.state.exercises.map(function(item){
+      return(<option value={item}>{item}</option>);
+    });
     return (
       <div id="form">
         <a id="adButton" className="fa fa-plus fa-3x" onClick={this.openModal}></a>
@@ -80,14 +104,18 @@ class App extends React.Component {
  
           <h3 ref={subtitle => this.subtitle = subtitle}>New Exercise</h3>
           <form>
-          <label>Exercise:
-          <select value={this.state.value} id="exerciseDropdown" onChange={this.handleChange}>
-            {items}
-          </select>
-        </label >
-            <button  onClick={this.closeModal}>add</button>
-            <button  onClick={this.closeModal}>close</button>
-
+          <label className="addWrap"><select value={this.state.value} id="exerciseDropdown" onChange={this.handleChange}>
+              {items}
+            </select>
+          </label >
+          <button className={classNames("fa fa-edit fa-2x","formButton")}onClick={this.closeModal}></button>
+          <div id="exerciseEntry" >
+            <ListGroup>
+              {entries}
+              <ListGroup.Item></ListGroup.Item>  
+            </ListGroup>
+          </div>
+          <button  id="closeButton" className={classNames("fa fa-times fa-1x","formButton")}onClick={this.closeModal}></button>
           </form>
 
         </Modal>
