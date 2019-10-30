@@ -32,9 +32,13 @@ class UserExercise(models.Model):
     def __str__(self):
         return self.date
 
+    def __str__(self):
+        return self.exercise.name
+
 class LogEntries(models.Model):
+
     userExercise = models.ForeignKey(UserExercise, on_delete=models.CASCADE)
-    weight = models.DecimalField(max_digits=3, decimal_places=2)
+    weight = models.DecimalField(max_digits=5, decimal_places=2)
     reps = models.PositiveSmallIntegerField(null=True)
 
     def __str__(self):

@@ -30,3 +30,9 @@ class LogEntriesSerializer(serializers.ModelSerializer):
         field = '__all__'
 
 
+class FlexSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = LogEntries
+        fields = ('weight', 'reps') 
+
+    

@@ -1,1 +1,4 @@
 venv/
+flexvenv/
+.vscode/
+db.sqlite3
