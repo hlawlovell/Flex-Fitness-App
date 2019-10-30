@@ -142,7 +142,7 @@ AUTH_PROFILE_MODULE = 'Profile'
 STATIC_URL = '/static/'
 
 # Redirect to home URL after login
-LOGIN_REDIRECT_URL = 'stats'
+LOGIN_REDIRECT_URL = 'flexcard'
 
 # Redirect to login URL after logout
 LOGOUT_REDIRECT_URL = 'login'

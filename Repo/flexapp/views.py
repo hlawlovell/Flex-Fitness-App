@@ -10,7 +10,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.renderers import JSONRenderer
 
-from django.http import Http404
+from django.http import Http404, JsonResponse
 from django.shortcuts import redirect, render
 from django.contrib import messages
 from django.contrib.auth import login
@@ -30,24 +30,23 @@ class SignUpView(APIView):
             user = form.save()
             profile = Profile(user=user)
             profile.save()
-            messages.success(request, 'Successful registraion. You can now log in.')
 
             user_serializer = UserSerializers(user)
             profile_serializer = ProfileSerializer(profile)
 
             response = {
                 'created': True,
-                'user':user_serializer,
-                'profile': profile_serializer
+                'user':user_serializer.data,
+                'profile': profile_serializer.data,
             }
             return Response(response)
+
         else:
-            messages.error(request, 'Invalid values.')
             form = UserCreationForm()
             response = {
                 'created': False,
             }
-            return Response(response)
+            return JsonResponse(response)
 
     #Render the sign up page
     def get(self, request):
@@ -56,26 +55,33 @@ class SignUpView(APIView):
             'created': False,
             'form': form
         }
-        return Response(response)
+        return JsonResponse(response)
 
 class ProfileView(APIView):
     #Get user profile
     def get(self, request):
+
         current_user = request.user
         profile = Profile.objects.get(user=current_user)
         if profile is None:
             profile = Profile(user=current_user)
             profile.save()
+
+        user_serializer = UserSerializers(current_user)
+        profile_serializer = ProfileSerializer(profile)
+
         response = {
-            'profile': profile,
-            'user': current_user
+            'profile': profile_serializer,
+            'user': user_serializer.data,
         }
-        return Response(response)
+        return JsonResponse(response)
 
     #Update user profile
     def post(self, request):
+
         current_user = request.user
         profile = Profile.objects.get(user=current_user)
+
         if profile is None:
             profile = Profile(user=current_user)
         profile.name = request.POST['name']
@@ -83,25 +89,13 @@ class ProfileView(APIView):
         Profile.height = request.POST['height']
         Profile.weight = request.POST['weight']
         profile.save()
-        messages.success(request, 'Profile saved.')
-        response = {
-            'profile': profile
-        }
-        return Response(response)
 
-class StatsView(APIView):
+        profile_serializer = ProfileSerializer(profile)
 
-    #The home view, which is the stats view
-    def get(self, request):
-        current_user = request.user
-        profile = Profile.objects.get(user=current_user)
-        if profile is None:
-            profile = Profile(user=current_user)
-            profile.save()
         response = {
-            'profile': profile
+            'profile': profile_serializer.data
         }
-        return Response(response)
+        return JsonResponse(response)
 
 class DashboardView(APIView):
 
@@ -110,24 +104,31 @@ class DashboardView(APIView):
         current_user = request.user
         date = d(year, month, day)
         user_exercise = UserExercise.objects.filter(user=current_user, date=date)
+
+        userexercise_serializer = UserExerciseSerializer(user_exercise)
+
         response = {
-            'user_exercises': user_exercise
+            'user_exercises': userexercise_serializer.data
         }
-        return Response(response)
+        return JsonResponse(response)
 
 class UserExerciseView(APIView):
 
     #Get user exercise by id
     def get(self, request, id=0):
+
         current_user = request.user
         try:
             user_exercise = UserExercise.objects.get(user=current_user, id=id)
         except UserExercise.DoesNotExist:
             raise Http404('User exercise not found.')
+
+        userexercise_serializer = UserExerciseSerializer(user_exercise)
+
         response = {
-            'userexercise': user_exercise
+            'userexercise': userexercise_serializer.data
         }
-        return Response(response)
+        return JsonResponse(response)
 
     #delete user exercise by id
     def delete(self, request, id=0):
@@ -137,12 +138,12 @@ class UserExerciseView(APIView):
         except UserExercise.DoesNotExist:
             raise Http404('User exercise not found.')
         user_exercise.delete()
-        messages.success(request, 'Successful deletion.')
+        userexercise_serializer = UserExerciseSerializer(user_exercise)
         response = {
             'deleted': True,
-            'user_exercise': user_exercise,
+            'user_exercise': userexercise_serializer.data,
         }
-        return Response(response)
+        return JsonResponse(response)
 
     #Update existing user exercise, or create a new one if does not exist
     def post(self, request, id=0):
@@ -155,12 +156,14 @@ class UserExerciseView(APIView):
         user_exercise.sets = request.POST['sets']
         user_exercise.date = request.POST['date']
         user_exercise.save()
-        messages.success(request, 'User exercise created.')
+        
+        userexercise_serializer = UserExerciseSerializer(user_exercise)
+
         response = {
             'created': True,
-            'user_exercise': user_exercise,
+            'user_exercise': userexercise_serializer.data,
         }
-        return Response(response)
+        return JsonResponse(response)
         
 class FlexCardView(APIView):
     def get(self, request):

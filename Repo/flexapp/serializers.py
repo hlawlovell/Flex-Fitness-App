@@ -7,7 +7,7 @@ from .models import Profile, Exercise, UserExercise, LogEntries
 class UserSerializers(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = "__all__"
+        fields = ('username', 'password')
 
 class ProfileSerializer(serializers.ModelSerializer):
     class Meta:
