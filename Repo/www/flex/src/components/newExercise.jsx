@@ -2,7 +2,8 @@ import React from 'react';
 import Modal from 'react-modal';
 import classNames from 'classnames';
 import '../components/workout.css'
-import { Container, ListGroup } from "react-bootstrap";
+import { ListGroup } from "react-bootstrap";
+import axios from 'axios';
 
 
 const customStyles = {
@@ -32,23 +33,7 @@ class App extends React.Component {
  
     this.state = {
       modalIsOpen: false,
-      exercises: [{
-        "bench":[{
-          5:100,
-          2:100,
-          2:100
-        }]},
-        {"squat":[{
-          5:100,
-          2:100,
-          2:100
-        }]},
-        {"deadlift":[{
-          5:100,
-          2:100,
-          2:100
-        }]
-      }]
+      exercises: []
     };
  
     this.openModal = this.openModal.bind(this);
@@ -64,7 +49,16 @@ class App extends React.Component {
  
   afterOpenModal() {
     // references are now sync'd and can be accessed.
-    
+    let currentComponent = this;
+    //request data from backend
+    axios.get("https://45485187-422b-4292-9c00-03bb45619368.mock.pstmn.io/exercises")
+    .then(function (response) {
+        console.log(response.data);
+        currentComponent.setState({exercises:response.data});
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
   }
  
   closeModal() {
@@ -83,14 +77,14 @@ class App extends React.Component {
     event.preventDefault();
   }
 
+
+
  
   render() {
     const items = this.state.exercises.map(function(item){
-      return(<option value={item}>{item}</option>);
+      return(<option value={item.name}>{item.name}</option>);
     });
-    const entries = this.state.exercises.map(function(item){
-      return(<option value={item}>{item}</option>);
-    });
+
     return (
       <div id="form">
         <a id="adButton" className="fa fa-plus fa-3x" onClick={this.openModal}></a>
@@ -108,13 +102,7 @@ class App extends React.Component {
               {items}
             </select>
           </label >
-          <button className={classNames("fa fa-edit fa-2x","formButton")}onClick={this.closeModal}></button>
-          <div id="exerciseEntry" >
-            <ListGroup>
-              {entries}
-              <ListGroup.Item></ListGroup.Item>  
-            </ListGroup>
-          </div>
+          <button className={classNames("fa fa-edit fa-lg","formButton")}onClick={this.closeModal}></button>
           <button  id="closeButton" className={classNames("fa fa-times fa-1x","formButton")}onClick={this.closeModal}></button>
           </form>
 

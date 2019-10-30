@@ -51,36 +51,76 @@
 
 
 
-#daySelect, .arrow{
-    -webkit-touch-callout: none; /* iOS Safari */
-    -webkit-user-select: none; /* Safari */
-     -khtml-user-select: none; /* Konqueror HTML */
-       -moz-user-select: none; /* Old versions of Firefox */
-        -ms-user-select: none; /* Internet Explorer/Edge */
-            user-select: none; 
-}
 
 /*LIST ITEMS*/
 .exerciseWrapper{
-    max-width:1000px;
+    width:100%;
     margin:auto;
-    font-size:1.5em;
+    padding:0px;
+    font-size:1.7em;
+    
+    
 }
+.exerciseLabel{
+    width:100%;
+
+}
+.Collapsible{
+    width:100%;
+    margin:0px;
+    padding:0px;
+}
+.Collapsible__trigger{
+    padding:0px;
+    cursor:pointer;   
+}
+.Collapsible__trigger :hover{
+    background-color: rgba(170, 197, 214, 0.178)!important; 
+}
+.Collapsible__contentOuter{
+    background-color:rgb(0, 77, 107);
+    color:white;
+    
+
+}
+.new1{
+    padding-left:20px;
+}
+.new2{
+    position: absolute;
+    right:0;
+    padding-right:10px;
+    font-weight: 600;
+    margin-right:30px;
+}
+
+
+
 @media (max-width: 600px){
     .exerciseWrapper {
         font-size:1em;
     }
 }
-.exerciseTitle{
+
+.exerciseReps {
+    text-align: center;
+    border-right:thin solid rgba(255, 255, 255, 0.274);
+    padding: 5px 15px;
+    float:left;
 }
-.exerciseWeight{
+.exerciseRepsWrap{
+    border:thin solid transparent;
+}
+
+.deleteWorkout{
     float:right;
+    cursor:pointer;
+    padding:10px;
+    color:rgba(255, 255, 255, 0.644) !important;
 }
-.exerciseReps{
-    float:right;
-    padding-right:10px;
-    font-weight: bold;
-}
+
+
+
 
 /*Add exercise popup*/
 #adButton{
@@ -115,9 +155,13 @@
 .textField{
     max-width: 100px;
 }
-.weight{
-    float:left;
-}
-.rep{
-    float:right;
-}
+
+.noselect {
+    -webkit-touch-callout: none; /* iOS Safari */
+      -webkit-user-select: none; /* Safari */
+       -khtml-user-select: none; /* Konqueror HTML */
+         -moz-user-select: none; /* Old versions of Firefox */
+          -ms-user-select: none; /* Internet Explorer/Edge */
+              user-select: none; /* Non-prefixed version, currently
+                                    supported by Chrome, Opera and Firefox */
+  }

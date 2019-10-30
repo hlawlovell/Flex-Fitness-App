@@ -5,6 +5,8 @@ import App from '../components/newExercise.jsx'
 import classNames from 'classnames';
 import 'font-awesome/css/font-awesome.min.css';
 import axios from 'axios';
+import Collapsible from 'react-collapsible';
+
 
 const dayViewWrapStyle = {
     'paddingTop':'5%',
@@ -29,73 +31,93 @@ const Days = [
 class WorkoutTracker extends Component{
     constructor(props){
         super(props);
+        
         this.state = {
             date: Days[myDate.getDay()]+" - "+myDate.getDate()+"/"+(myDate.getMonth()+1)+"/"+myDate.getFullYear(),
             exercises: []
         }
     }
 
-    test = () => {
-
+    componentDidMount() {
+        var d = myDate;
+        let currentComponent = this;
+        //request data from backend
+        axios.get("https://45485187-422b-4292-9c00-03bb45619368.mock.pstmn.io/dashboard/"+d.getFullYear()+"/"+(myDate.getMonth()+1)+"/"+d.getDate()+"/")
+        .then(function (response) {
+            
+            console.log(response.data.exercises);
+            currentComponent.setState({ date: Days[d.getDay()]+" - "+d.getDate()+"/"+(myDate.getMonth()+1)+"/"+d.getFullYear(),
+            exercises:response.data.exercises});
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
     }
 
     previousDay = () => {
         //decrease day by 1
         var d = myDate;
         d.setDate(d.getDate() - 1);
-        
+        let currentComponent = this;
         //request data from backend
-        axios.get("http://localhost:8000/dashboard/"+d.getFullYear()+"/"+(myDate.getMonth()+1)+"/"+d.getDate()+"/")
-        .then(res => {
-                const exercises = res.data;
-        })
-        this.setState({ date: Days[d.getDay()]+" - "+d.getDate()+"/"+(myDate.getMonth()+1)+"/"+d.getFullYear(),
-                        exercises:[]});
-        
+        axios.get("https://45485187-422b-4292-9c00-03bb45619368.mock.pstmn.io/dashboard/"+d.getFullYear()+"/"+(myDate.getMonth()+1)+"/"+d.getDate()+"/")
+        .then(function (response) {
+            currentComponent.setState({exercises:[]});
+            currentComponent.setState({ date: Days[d.getDay()]+" - "+d.getDate()+"/"+(myDate.getMonth()+1)+"/"+d.getFullYear(),
+            exercises:response.data.exercises});
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
      };
 
      nextDay = () => {
         var d = myDate;
         d.setDate(d.getDate() + 1);
-        axios.get("http://localhost:8000/dashboard/"+d.getFullYear()+"/"+(myDate.getMonth()+1)+"/"+d.getDate()+"/")
-
-
-
-        this.setState({ date: Days[d.getDay()]+" - "+d.getDate()+"/"+(myDate.getMonth()+1)+"/"+d.getFullYear(),
-        exercises:[
-            "Lunges","Chinups","Kicking"
-        ]});
+        let currentComponent = this;
+        axios.get("https://45485187-422b-4292-9c00-03bb45619368.mock.pstmn.io/dashboard/"+d.getFullYear()+"/"+(myDate.getMonth()+1)+"/"+d.getDate()+"/")
+        .then(function (response) {
+            currentComponent.setState({exercises:[]});
+            currentComponent.setState({ date: Days[d.getDay()]+" - "+d.getDate()+"/"+(myDate.getMonth()+1)+"/"+d.getFullYear(),
+            exercises:response.data.exercises});
+            
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
     };
 
 
 
     render(){
-        
+
         const items = this.state.exercises.map(function(item){
-            
-            return(
-                <ListGroup.Item><div  className="exerciseWrapper">
-                    <a className="exerciseTitle">{item.exercise}</a>
-                    <a className="exerciseWeight">{item.weight}</a>
-                    <a className="exerciseReps">{item.reps}</a>
-                    </div></ListGroup.Item>
+        const Trigger = () => <div><a class="new1">{item.title}</a><a className="new2">{item.sets.length}</a></div>;
+
+             return(
+                <ListGroup.Item className={classNames("noselect","exerciseWrapper")}>
+                    <Collapsible className={classNames("noselect","exerciseLabel")} trigger={<Trigger />}>
+                    <p className="exerciseRepsWrap">{item.sets.map(function(set){
+                        return(
+                            <a className="exerciseReps">{set[0]+"x"+set.substring(2)}</a>
+                        )})}<a className={classNames("fa fa-trash","deleteWorkout")}></a></p>
+                    </Collapsible>
+                </ListGroup.Item>     
                 );
           });
 
-        const item = this.state.exercises.map(function(item){
-            return <ListGroup.Item> {item} </ListGroup.Item>;
-          });
+        
         return(
             <div className="WorkoutTracker">
                 <Container id="workoutWrap" style={workoutWrapStyle}>
                     <div id="workouts" style={dayViewWrapStyle}>
                         <ListGroup>
-                        <ListGroup.Item><div id="daySelect"><a className={classNames("arrow","left","fa fa-chevron-left fa-lg")} 
-                                        onClick={this.previousDay}></a>{this.state.date}<a className={classNames("arrow","right","fa fa-chevron-right fa-lg")}   onClick={this.nextDay}></a></div></ListGroup.Item>
+                        <ListGroup.Item><div id="daySelect"><a className={classNames("arrow","left","fa fa-chevron-left fa-lg","noselect")} 
+                                        onClick={this.previousDay}></a>{this.state.date}<a className={classNames("noselect","arrow","right","fa fa-chevron-right fa-lg")}   onClick={this.nextDay}></a></div></ListGroup.Item>
                         {items}
                         </ListGroup>
                     </div>
-                    <div id="adButtonWrap">
+                    <div id="adButtonWrap" >
                         <App />
                     </div>
                 </Container> 
