@@ -6,6 +6,9 @@ import '../components/common.css';
 import Logo from '../components/Logo';
 import GenericDisplay from '../images/genericDisplay.png';
 import axios from 'axios';
+import FormCheckInput from "react-bootstrap/FormCheckInput";
+import { Formik } from 'formik';
+
 
 const ChangeButton = styled.button`
   fontSize: 44;
@@ -64,7 +67,7 @@ const LongInput = styled.input`
   width: 50%;
   height: 25px;
   border: solid 1px black;
-  background:'white';
+  background: white;
   flex-direction: column;
 `;
 
@@ -76,7 +79,7 @@ const ShortInfoBox = styled.div`
 `;
 
 const ShortInput = styled.input`
-  width: 100%;
+  width: 50%;
   height: 25px;
   border: solid 1px black;
   background: white;
@@ -104,6 +107,11 @@ const SmallBoxWrapper =styled.div`
 const SmallBoxContainer = styled.div`
   width: 20%;
 `;
+const ErrorMessage = styled.div`
+  color: red;
+`;
+
+
 
 const Update = (name, email, password, height, weight) => {
   axios
@@ -161,106 +169,159 @@ const Profile = () => {
 
         {updating ? (
           <div>
-              <FormElements>
-                <Label for="name"> Name</Label>
-                <LongInput 
-                  id="name"
-                  type="text"
-                  placeholder="John"
-                  value={name}
-                  onChange={e => {
-                    setName(e.target.value);
-                  }}
-                />
+            <Formik
+              initialValues={{name: name, email: email, password1: password, password2: password, height: height, weight: weight}}
+              validate={values => {
+                let errors = {};
 
-                <Label for="email"> Email</Label>
-                <LongInput 
-                  id="email"
-                  type="text"
-                  placeholder="John@usyd.edu.au"
-                  value={email}
-                  onChange={e => {
-                    setEmail(e.target.value);
-                  }}
-                />
-
-                <Label for="password"> 
-                  Password <Recede> (min. 6 characters) </Recede>
-                </Label>
-                <LongInput 
-                  id="password"
-                  type="text"
-                  placeholder="p4ssw0rd"
-                  value={password}
-                  onChange={e => {
-                    setPassword(e.target.value);
-                  }}
-                  />
-
-
-                <SmallBoxWrapper>
-                  <SmallBoxContainer>
-                    <Label for="height"> Height(cm)</Label>
-                    <ShortInput 
-                      id="height" 
-                      type="number"
-                      placeholder="200"
-                      value={height}
-                      onChange={e => {
-                        setHeight(e.target.value);
-                      }}  
-                    />
-                  </SmallBoxContainer>
-
-                  <EmptySpace/>
-
-                  <SmallBoxContainer>
-                    <Label for="weight"> Weight(kg)</Label>
-                    <ShortInput 
-                      id="weight" 
-                      type="number"
-                      placeholder="100"
-                      value={weight}
-                      onChange={e => {
-                        setWeight(e.target.value);
-                      }}  
-                    />
-                  </SmallBoxContainer>
-                </SmallBoxWrapper>
-                <Button
-                  onClick={() => {
-                    setUpdating(false);
-                    Update(name, email, password, height, weight);
-                  }}
-                >Save
-                </Button>
+                // validate email
+                if (!values.email) {
+                  errors.email = "Enter an email address";
+                } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)) {
+                  errors.email = 'Invalid email address';
+                }
                 
-              </FormElements>
+                // validate password
+                if (!values.password1) {
+                    errors.password1 = "Enter a password";
+                } else if (values.password1.length < 6) {
+                  errors.password1 = "Password must be minimum 6 characters";
+                } else if (values.password1 !== values.password2) {
+                  errors.password2 = "Password does not match";
+                } 
+                
+                // validate name
+                if (!values.name) {
+                  errors.name = "Enter a name";
+                }
+                
+                // validate height
+                if (!values.height) {
+                  errors.height = "Enter height";
+                } else if (values.height < 0) {
+                  errors.height = "Enter positive height value";
+                }
+
+                // validate weight
+                if (!values.weight) {
+                  errors.weight = "Enter weight";
+                }
+                return errors
+              }}
+              onSubmit={values => {
+                console.log("testing")
+                setUpdating(false);
+                Update(values.name, values.email, values.password1, values.height, values.weight);
+              }}
+              >
+                {({ handleSubmit,
+                    handleChange,
+                    values,
+                    touched,
+                    isValid,
+                    errors}) => (
+                        <form onSubmit={handleSubmit}>
+                          <FormElements>
+                            <Label for="name"> Name</Label>
+                            <LongInput 
+                              name="name"
+                              type="text"
+                              placeholder="John"
+                              value={values.name}
+                              onChange={handleChange}
+                            />
+                            <ErrorMessage>{errors.name && touched.name && errors.name}</ErrorMessage> 
+
+                            <Label for="email"> Email</Label>
+                            <LongInput 
+                              name="email"
+                              type="text"
+                              placeholder="John@usyd.edu.au"
+                              value={values.email}
+                              onChange={handleChange}
+                            />
+                            <ErrorMessage>{errors.email && touched.email && errors.email}</ErrorMessage> 
+                          
+
+                            <Label for="password1"> 
+                              Password <Recede> (min. 6 characters) </Recede>
+                            </Label>
+                            <LongInput 
+                              name="password1"
+                              type="password"
+                              placeholder="Password"
+                              value={values.password1}
+                              onChange={handleChange}
+                              />
+                              <ErrorMessage>{errors.password1 && touched.password1 && errors.password1}</ErrorMessage> 
+
+                            <Label for="password2"> 
+                              Confirm Password
+                            </Label>
+                            <LongInput 
+                              name="password2"
+                              type="password"
+                              placeholder="Confirm Password"
+                              value={values.password2}
+                              onChange={handleChange}
+                              />
+                              <ErrorMessage>{errors.password2 && touched.password2 && errors.password2}</ErrorMessage> 
+
+                            <SmallBoxWrapper>
+                              <SmallBoxContainer>
+                                <Label for="height"> Height(cm)</Label>
+                                <ShortInput 
+                                  name="height" 
+                                  type="number"
+                                  placeholder="200"
+                                  value={values.height}
+                                  onChange={handleChange}
+                                />
+                                <ErrorMessage>{errors.height && touched.height && errors.height}</ErrorMessage> 
+                              </SmallBoxContainer>
+
+                              <EmptySpace/>
+
+                              <SmallBoxContainer>
+                                <Label for="weight"> Weight(kg)</Label>
+                                <ShortInput 
+                                  id="weight" 
+                                  type="number"
+                                  placeholder="100"
+                                  value={values.weight}
+                                  onChange={handleChange}  
+                                />
+                                <ErrorMessage>{errors.weight && touched.weight && errors.weight}</ErrorMessage> 
+                              </SmallBoxContainer>
+                            </SmallBoxWrapper>
+                            <Button
+                              type="submit"
+                            >Save
+                            </Button>
+                          </FormElements>
+                        </form>    
+                    )}
+              </Formik>
         </div>
         ) : (
           <div>
             
-              
-              <FormElements>
-                
+              <FormElements >
                 <Label for="name"> Name</Label>
                 <LongInfoBox 
                   id="name"
                   value={name}
                 />
-
                 <Label for="email"> Email</Label>
                 <LongInfoBox 
                   id="email"
                   value={email}
                 />
-
                 <Label for="password" > Password</Label>
                 <LongInfoBox 
                   id="password"
                   value={password}
                 />
-
 
                 <SmallBoxWrapper>
                   <SmallBoxContainer>

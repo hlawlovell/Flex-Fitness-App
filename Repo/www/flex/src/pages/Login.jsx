@@ -4,11 +4,12 @@ import Button from 'react-bootstrap/Button';
 import axios from 'axios';
 import { Formik } from 'formik';
 
-const login = (email, password) => {
+
+const login = (formData) => {
+  
   axios
   .post('http://localhost:3000/accounts/login', {
-    email,
-    password,
+    formData
   })
   .then(function() {
     window.location.href = '/flex';
@@ -36,7 +37,12 @@ const Login = () => {
           return errors
       }}
       onSubmit={values => {
-        login(values.email, values.password);
+        
+        var formData = new FormData();
+        formData.append('email',values.email);
+        formData.append('password',values.password);
+
+        login(formData);
       }}
     >
       {({handleSubmit,
@@ -78,9 +84,7 @@ const Login = () => {
         className="formButton" 
         variant="primary" 
         type="submit"
-        onClick={e => {
-          login(email, password);
-        }}>
+        >
         Login
       </Button>
       <Button className="formButton" variant="primary" type="submit" href="/register">
