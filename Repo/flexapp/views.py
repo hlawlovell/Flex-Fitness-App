@@ -12,6 +12,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from .models import *
+from .serializers import *
 
 class SignUpView(APIView):
 
@@ -23,10 +24,14 @@ class SignUpView(APIView):
             profile = Profile(user=user)
             profile.save()
             messages.success(request, 'Successful registraion. You can now log in.')
+
+            user_serializer = UserSerializers(user)
+            profile_serializer = ProfileSerializer(profile)
+
             response = {
                 'created': True,
-                'user':user,
-                'profile': profile
+                'user':user_serializer,
+                'profile': profile_serializer
             }
             return Response(response)
         else:
@@ -34,7 +39,6 @@ class SignUpView(APIView):
             form = UserCreationForm()
             response = {
                 'created': False,
-                'message': 'Invalid Input',
             }
             return Response(response)
 
