@@ -4,7 +4,6 @@ import classNames from 'classnames';
 import '../components/workout.css'
 import { ListGroup, Button, Input } from "react-bootstrap";
 import axios from 'axios';
-import exerciseField from '../components/exerciseField'
 
 
 
@@ -30,14 +29,14 @@ const customStyles = {
 Modal.setAppElement(document.getElementById('root'));
  
 class ExerciseField extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
  
     this.state = {
       modalIsOpen: false,
-      exercises: []
+      newExercise:""
     };
- 
+    this.onClose = this.props.onClose;
     this.openModal = this.openModal.bind(this);
     this.afterOpenModal = this.afterOpenModal.bind(this);
     this.closeModal = this.closeModal.bind(this);
@@ -52,8 +51,8 @@ class ExerciseField extends React.Component {
   afterOpenModal() {
 
   }
- 
   closeModal() {
+    this.onClose();
     this.setState({modalIsOpen: false});
   }
   newType() {
@@ -65,33 +64,46 @@ class ExerciseField extends React.Component {
   }
 
   handleSubmit(event) {
-    alert(this.state.exercises);
     event.preventDefault();
+    const data = event.target.text.value;
+    var self = this;
+    axios({
+      method: 'post',
+      url:"https://6755e99e-1a84-483c-9a22-1b38efb2fe1e.mock.pstmn.io/exercises",
+      data: {
+        name:event.target.text.value
+      },
+      config:{
+        headers:{'Content-Type':'application/json'}
+      }
+    })
+    .then(function(response){
+      console.log(response);
+      self.closeModal();
+    })
+
   }
 
 
 
  
   render() {
-    const items = this.state.exercises.map(function(item){
-      return(<option value={item.name}>{item.name}</option>);
-    });
-
+ 
     return (
       <div id="form">
-        <a id="adButton" className="fa fa-edit fa-lg" onClick={this.openModal}></a>
+        <a id="adExButton" className="fa fa-edit fa-lg" onClick={this.openModal}></a>
         <Modal
           isOpen={this.state.modalIsOpen}
           onAfterOpen={this.afterOpenModal}
           onRequestClose={this.closeModal}
-          style={customStyles}f
+          style={customStyles}
           contentLabel="New Exercise"
         >
  
           <h3 ref={subtitle => this.subtitle = subtitle}>New Exercise</h3>
           <form onSubmit={this.handleSubmit}>
-            <input onClick={event => this.handleSubmit(event.target.value)} />
-            <button className={classNames("fa fa-save fa-lg","formButton")}onClick={this.handleSubmit}></button>
+            <input type="text" name="text" required={true} />
+            <button id="newExNameSave" className={classNames("fa fa-save fa-lg","formButton")} type="submit" name="submit"></button>
             <button  id="closeButton" className={classNames("fa fa-times fa-1x","formButton")}onClick={this.closeModal}></button>
           </form>
 

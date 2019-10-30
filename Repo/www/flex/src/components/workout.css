@@ -123,16 +123,36 @@
 
 
 /*Add exercise popup*/
-#adButton{
+#adExButton{
     cursor:pointer;
+    margin-top:10px;
+}
+#adExButtonWrap{
+    background-color: white;
+    color: rgb(44, 44, 44);
+    margin-right:15px;
+    max-width:30px;
+    float:right;
 }
 #closeButton{
     position: absolute;
     top:0;
     right:0;
-    color: rgb(90, 90, 90);
+    color: rgb(107, 107, 107);
 
 }
+.exerciseInput{
+    padding-top:5px;
+    width:41%;
+    float:left;
+    text-align: center;
+}
+.exerciseInput input{
+    width:90%;
+    background-color: rgb(248, 248, 248);
+    border: thin solid rgb(107, 107, 107);
+}
+
 .addWrap{
     width:85%;
     text-align: center;
@@ -142,15 +162,30 @@
     display: inline-block;
     margin:auto;
     width: 100%;
-    min-width:300px;
-    font-size:1.3em;
-    
+    min-width:260px;
+    font-size:1.1em; 
+
 }
+@media (max-width: 600px){
+    .addWrap{
+        width:260px;
+    }
+}
+
 .formButton{
     background-color: white;
-    color: rgb(107, 107, 107);
+    color: rgb(0, 0, 0) !important;
     border:none;
-    margin-left:20px;
+}
+#newExNameSave{
+    margin-left:20px!important;
+}
+#exerciseSave{
+    width:18%;
+    float:left;
+    margin-top:32px;
+    text-align: center;
+
 }
 .textField{
     max-width: 100px;

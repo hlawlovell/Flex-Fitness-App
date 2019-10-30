@@ -38,12 +38,26 @@ class App extends React.Component {
       modalIsOpen: false,
       exercises: []
     };
- 
+    this.onClose = this.onClose.bind(this);
     this.openModal = this.openModal.bind(this);
     this.afterOpenModal = this.afterOpenModal.bind(this);
     this.closeModal = this.closeModal.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
+  //called when new exercise is added
+  onClose(){
+    let currentComponent = this;
+    //request data from backend
+    axios.get("https://45485187-422b-4292-9c00-03bb45619368.mock.pstmn.io/exercises")
+    .then(function (response) {
+        console.log(response.data);
+        currentComponent.setState({exercises:response.data});
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
   }
  
   openModal() {
@@ -76,8 +90,27 @@ class App extends React.Component {
   }
 
   handleSubmit(event) {
-    alert(this.state.value);
     event.preventDefault();
+    const name = event.target.selected.value;
+    const reps = event.target.reps.value;
+    const weight = event.target.weight.value;
+    var self = this;
+    axios({
+      method: 'post',
+      url:"https://6755e99e-1a84-483c-9a22-1b38efb2fe1e.mock.pstmn.io/exercises",
+      data: {
+        title:"bench",
+        reps:10,
+        weight:200
+      },
+      config:{
+        headers:{'Content-Type':'application/json'}
+      }
+    })
+    .then(function(response){
+      console.log(response);
+      self.closeModal();
+    })
   }
 
 
@@ -100,13 +133,15 @@ class App extends React.Component {
         >
  
           <h3 ref={subtitle => this.subtitle = subtitle}>New Entry</h3>
-          <form>
-          <label className="addWrap"><select value={this.state.value} id="exerciseDropdown" onChange={this.handleChange}>
+          <form onSubmit={this.handleSubmit}>
+          <label className="addWrap"><select value={this.state.value} id="exerciseDropdown" name="selected" onChange={this.handleChange}>
               {items}
             </select>
           </label >
-          <button className={classNames("fa fa-edit fa-lg","formButton")}></button>
-          <div id="adButtonWrap" ><ExerciseField /></div>
+          <div id="adExButtonWrap" ><ExerciseField  onClose={this.onClose}/></div>
+          <div class="exerciseInput">Reps:<input type="number" step="1" name="Reps" required={true} /></div>
+          <div class="exerciseInput">Weight:<input type="number" step="1" name="Weight" required={true} /></div>
+          <div  id="exerciseSave"><button className={classNames("fa fa-save fa-lg","formButton")} type="submit" name="submit"></button></div>
           <button  id="closeButton" className={classNames("fa fa-times fa-1x","formButton")}onClick={this.closeModal}></button>
           </form>
 
