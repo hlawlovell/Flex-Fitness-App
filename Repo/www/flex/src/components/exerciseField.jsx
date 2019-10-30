@@ -5,7 +5,6 @@ import '../components/workout.css'
 import { ListGroup, Button, Input } from "react-bootstrap";
 import axios from 'axios';
 import exerciseField from '../components/exerciseField'
-import ExerciseField from '../components/exerciseField';
 
 
 
@@ -30,7 +29,7 @@ const customStyles = {
  
 Modal.setAppElement(document.getElementById('root'));
  
-class App extends React.Component {
+class ExerciseField extends React.Component {
   constructor() {
     super();
  
@@ -51,17 +50,7 @@ class App extends React.Component {
   }
  
   afterOpenModal() {
-    // references are now sync'd and can be accessed.
-    let currentComponent = this;
-    //request data from backend
-    axios.get("https://45485187-422b-4292-9c00-03bb45619368.mock.pstmn.io/exercises")
-    .then(function (response) {
-        console.log(response.data);
-        currentComponent.setState({exercises:response.data});
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
+
   }
  
   closeModal() {
@@ -72,11 +61,11 @@ class App extends React.Component {
   }
 
   handleChange(event) {
-    this.setState({value: event.target.value});
+    this.setState({exer: event.target.value});
   }
 
   handleSubmit(event) {
-    alert(this.state.value);
+    alert(this.state.exercises);
     event.preventDefault();
   }
 
@@ -90,24 +79,20 @@ class App extends React.Component {
 
     return (
       <div id="form">
-        <a id="adButton" className="fa fa-plus fa-3x" onClick={this.openModal}></a>
+        <a id="adButton" className="fa fa-edit fa-lg" onClick={this.openModal}></a>
         <Modal
           isOpen={this.state.modalIsOpen}
           onAfterOpen={this.afterOpenModal}
           onRequestClose={this.closeModal}
-          style={customStyles}
+          style={customStyles}f
           contentLabel="New Exercise"
         >
  
-          <h3 ref={subtitle => this.subtitle = subtitle}>New Entry</h3>
-          <form>
-          <label className="addWrap"><select value={this.state.value} id="exerciseDropdown" onChange={this.handleChange}>
-              {items}
-            </select>
-          </label >
-          <button className={classNames("fa fa-edit fa-lg","formButton")}></button>
-          <div id="adButtonWrap" ><ExerciseField /></div>
-          <button  id="closeButton" className={classNames("fa fa-times fa-1x","formButton")}onClick={this.closeModal}></button>
+          <h3 ref={subtitle => this.subtitle = subtitle}>New Exercise</h3>
+          <form onSubmit={this.handleSubmit}>
+            <input onClick={event => this.handleSubmit(event.target.value)} />
+            <button className={classNames("fa fa-save fa-lg","formButton")}onClick={this.handleSubmit}></button>
+            <button  id="closeButton" className={classNames("fa fa-times fa-1x","formButton")}onClick={this.closeModal}></button>
           </form>
 
         </Modal>
@@ -116,4 +101,4 @@ class App extends React.Component {
   }
 }
  
-export default App;
+export default ExerciseField;
