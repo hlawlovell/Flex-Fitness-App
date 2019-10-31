@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+import datetime
 
 # Create your models here.
 class Profile(models.Model):
@@ -27,7 +28,7 @@ class Exercise(models.Model):
 class UserExercise(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
     exercise = models.ForeignKey(Exercise, on_delete=models.CASCADE)
-    date = models.DateField(default=date.today)
+    date = models.DateField()
 
     def __str__(self):
         return self.exercise.name

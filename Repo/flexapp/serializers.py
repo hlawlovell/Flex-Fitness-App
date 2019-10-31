@@ -35,11 +35,6 @@ class FlexSerializer(serializers.ModelSerializer):
         model = LogEntries
         fields = ('weight', 'reps') 
 
-class UserExerciseSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = UserExercise
-        fields = ('sets',)
-
 class ExerciseSerializer(serializers.ModelSerializer):
     class Meta:
         model = Exercise

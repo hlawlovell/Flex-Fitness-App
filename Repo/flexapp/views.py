@@ -25,12 +25,7 @@ from django.db.models import Q
 from .models import *
 from .serializers import *
 
-class SignUpView(View):
-from rest_framework.response import Response
-from rest_framework.views import APIView
 
-from .models import *
-from .serializers import *
 
 class SignUpView(APIView):
 
@@ -104,12 +99,6 @@ class ProfileView(APIView):
         profile_serializer = ProfileSerializer(profile)
 
         response = {
-            'profile': profile
-        } 
-        return render(request, 'stats.html', response)
-
-
-
             'profile': profile_serializer.data
         }
         return JsonResponse(response)
@@ -189,7 +178,7 @@ class DashboardView(APIView):
             content_exercises.append(content_exercise)
             
 
-        content = {"exercises": dash_exercises}
+        content = {"exercises": content_exercises}
         return Response(content)
         
     # Post 
