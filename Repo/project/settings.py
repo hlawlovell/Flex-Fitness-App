@@ -11,6 +11,8 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 """
 
 import os
+import logging, logging.config
+import sys
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -116,24 +118,23 @@ USE_L10N = True
 
 USE_TZ = True
 
-
-AUTH_PROFILE_MODULE = 'Profile'
-REST_FRAMEWORK = {
-    'DEFAULT_SCHEMA_CLASS': 'rest_framework.schemas.coreapi.AutoSchema',
-    'DEFAULT_PERMISSION_CLASSES': [
-        'rest_framework.permissions.IsAuthenticated'
-    ],
-    'DEFAULT_PARSER_CLASSES': [
-        'rest_framework.parsers.FormParser',
-        'rest_framework.parsers.MultiPartParser',
-        'rest_framework.parsers.JSONParser',
-    ],
-    'DEFAULT_RENDERER_CLASSES': [
-        'rest_framework.renderers.JSONRenderer',
-        'rest_framework.renderers.BrowsableAPIRenderer',
-    ]
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'console': {
+            'class': 'logging.StreamHandler',
+        },
+    },
+    'loggers': {
+        'django': {
+            'handlers': ['console'],
+            'level': os.getenv('DJANGO_LOG_LEVEL', 'INFO'),
+        },
+    },
 }
 
+AUTH_PROFILE_MODULE = 'Profile'
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
@@ -141,7 +142,7 @@ REST_FRAMEWORK = {
 STATIC_URL = '/static/'
 
 # Redirect to home URL after login
-LOGIN_REDIRECT_URL = 'stats'
+LOGIN_REDIRECT_URL = 'flexcard'
 
 # Redirect to login URL after logout
 LOGOUT_REDIRECT_URL = 'login'

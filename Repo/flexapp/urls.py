@@ -3,7 +3,7 @@ The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/2.2/topics/http/urls/
 """
 from django.urls import path, include
-from flexapp.views import SignUpView, StatsView, DashboardView, UserExerciseView, FlexCardView, ProfileView, ExerciseView
+from flexapp.views import SignUpView, DashboardView, UserExerciseView, FlexCardView, ProfileView, ExerciseView
 
 urlpatterns = [
     path('signup/', SignUpView.as_view(), name='signup'),

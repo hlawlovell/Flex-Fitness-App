@@ -12,7 +12,7 @@ from rest_framework.renderers import JSONRenderer
 from rest_framework import status
 
 
-from django.http import Http404
+from django.http import Http404, JsonResponse
 from django.shortcuts import redirect, render
 from django.contrib import messages
 from django.contrib.auth import login
@@ -26,6 +26,13 @@ from .models import *
 from .serializers import *
 
 class SignUpView(View):
+from rest_framework.response import Response
+from rest_framework.views import APIView
+
+from .models import *
+from .serializers import *
+
+class SignUpView(APIView):
 
     #Register a new user
     def post(self, request):
@@ -34,41 +41,58 @@ class SignUpView(View):
             user = form.save()
             profile = Profile(user=user)
             profile.save()
-            messages.success(request, 'Successful registraion. You can now log in.')
+
+            user_serializer = UserSerializers(user)
+            profile_serializer = ProfileSerializer(profile)
+
             response = {
-                'user':user,
-                'profile': profile
+                'created': True,
+                'user':user_serializer.data,
+                'profile': profile_serializer.data,
             }
-            login(request, user)
-            return render(request, 'stats.html', response)
+            return Response(response)
+
         else:
-            messages.error(request, 'Invalid values.')
             form = UserCreationForm()
-            return render(request, 'signup.html', {'form': form})
+            response = {
+                'created': False,
+            }
+            return JsonResponse(response)
 
     #Render the sign up page
     def get(self, request):
         form = UserCreationForm()
-        return render(request, 'signup.html', {'form': form})
+        response = {
+            'created': False,
+            'form': form
+        }
+        return JsonResponse(response)
 
-class ProfileView(View):
+class ProfileView(APIView):
     #Get user profile
     def get(self, request):
+
         current_user = request.user
         profile = Profile.objects.get(user=current_user)
         if profile is None:
             profile = Profile(user=current_user)
             profile.save()
+
+        user_serializer = UserSerializers(current_user)
+        profile_serializer = ProfileSerializer(profile)
+
         response = {
-            'profile': profile,
-            'user': current_user
+            'profile': profile_serializer,
+            'user': user_serializer.data,
         }
-        return render(request, 'profile.html', response)
+        return JsonResponse(response)
 
     #Update user profile
     def post(self, request):
+
         current_user = request.user
         profile = Profile.objects.get(user=current_user)
+
         if profile is None:
             profile = Profile(user=current_user)
         profile.name = request.POST['name']
@@ -76,21 +100,9 @@ class ProfileView(View):
         Profile.height = request.POST['height']
         Profile.weight = request.POST['weight']
         profile.save()
-        messages.success(request, 'Profile saved.')
-        response = {
-            'profile': profile
-        }
-        return render(request, 'profile.html', response)
 
-class StatsView(View):
+        profile_serializer = ProfileSerializer(profile)
 
-    #The home view, which is the stats view
-    def get(self, request):
-        current_user = request.user
-        profile = Profile.objects.get(user=current_user)
-        if profile is None:
-            profile = Profile(user=current_user)
-            profile.save()
         response = {
             'profile': profile
         } 
@@ -98,20 +110,29 @@ class StatsView(View):
 
 
 
+            'profile': profile_serializer.data
+        }
+        return JsonResponse(response)
 
-class UserExerciseView(View):
+
+
+class UserExerciseView(APIView):
 
     #Get user exercise by id
     def get(self, request, id=0):
+
         current_user = request.user
         try:
             user_exercise = UserExercise.objects.get(user=current_user, id=id)
         except UserExercise.DoesNotExist:
             raise Http404('User exercise not found.')
+
+        userexercise_serializer = UserExerciseSerializer(user_exercise)
+
         response = {
-            'userexercise': user_exercise
+            'userexercise': userexercise_serializer.data
         }
-        return render(request, 'userexercise.html', response)
+        return JsonResponse(response)
 
     #delete user exercise by id
     def delete(self, request, id=0):
@@ -121,8 +142,12 @@ class UserExerciseView(View):
         except UserExercise.DoesNotExist:
             raise Http404('User exercise not found.')
         user_exercise.delete()
-        messages.success(request, 'Successful deletion.')
-        return redirect('userexercise.html', date = user_exercise.date)
+        userexercise_serializer = UserExerciseSerializer(user_exercise)
+        response = {
+            'deleted': True,
+            'user_exercise': userexercise_serializer.data,
+        }
+        return JsonResponse(response)
 
     #Update existing user exercise, or create a new one if does not exist
     def post(self, request, id=0):
@@ -135,8 +160,14 @@ class UserExerciseView(View):
         user_exercise.sets = request.POST['sets']
         user_exercise.date = request.POST['date']
         user_exercise.save()
-        messages.success(request, 'User exercise created.')
-        return redirect('dashboard.html', date=user_exercise.date)
+        
+        userexercise_serializer = UserExerciseSerializer(user_exercise)
+
+        response = {
+            'created': True,
+            'user_exercise': userexercise_serializer.data,
+        }
+        return JsonResponse(response)
 
 class DashboardView(APIView):
 
@@ -144,24 +175,22 @@ class DashboardView(APIView):
     def get(self, request, year=d.year, month=d.month, day=d.day):
         
         date = d(year, month, day)
-        user_exercises = UserExercise.objects.filter(user=request.user, date=date)
-        for i in user_exercises:
-            print(i)
-        dash_exercises = []
-        for ex in user_exercises:
-            sets = []
-            set_objects = ex.logentries_set.all()
+        exercises = UserExercise.objects.filter(user=request.user, date=date)
+        content_exercises = []
+        for e in exercises:
+            content_sets = []
+            set_objects = e.logentries_set.all()
             for s in set_objects:
                 set_entry = "%d:%.2f" % (s.reps, s.weight)
-                sets.append(set_entry)
+                content_sets.append(set_entry)
 
-            ex_name = ex.exercise.name
-            exercise = {"title": ex_name, "sets": sets}
-            dash_exercises.append(exercise)
+            exercise_name = e.exercise.name
+            content_exercise = {"title": exercise_name, "sets": content_sets}
+            content_exercises.append(content_exercise)
             
 
-        dash_response = {"exercises": dash_exercises}
-        return Response(dash_response)
+        content = {"exercises": dash_exercises}
+        return Response(content)
         
     # Post 
     def post(self, request, year=d.year, month=d.month, day=d.day):
