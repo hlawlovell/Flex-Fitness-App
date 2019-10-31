@@ -28,8 +28,37 @@ SECRET_KEY = 'ti5lk4xb33rt+^jbg02x5uxy#91^o(nz7$)1on&upnx7d#k6=*'
 DEBUG = True
 
 ALLOWED_HOSTS = []
+CORS_ORIGIN_ALLOW_ALL = False
 
-
+CORS_ORIGIN_WHITELIST = (
+       'http://localhost:3000',
+       'http://localhost:8000',
+)
+CORS_ALLOW_HEADERS = [
+    'accept',
+    'accept-encoding',
+    'authorization',
+    'content-type',
+    'dnt',
+    'origin',
+    'user-agent',
+    'x-CSRFToken',
+    'X-CSRF-Token',
+    'csrftoken',
+    'x-requested-with',
+    'Access-Control-Allow-Credentials',
+    'Set-Cookie',
+    
+]
+CORS_ALLOW_CREDENTIALS = True
+CORS_ALLOW_METHODS = [
+    'DELETE',
+    'GET',
+    'OPTIONS',
+    'PATCH',
+    'POST',
+    'PUT',
+]
 # Application definition
 
 INSTALLED_APPS = [
@@ -39,8 +68,11 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'rest_framework.authtoken', # new!
+    'rest_auth', # new!
     'rest_framework',
     'flexapp',
+    'corsheaders',
     'rest_framework_swagger',
 ]
 
@@ -52,6 +84,9 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
+    'django.middleware.common.CommonMiddleware'
+
 ]
 
 ROOT_URLCONF = 'project.urls'

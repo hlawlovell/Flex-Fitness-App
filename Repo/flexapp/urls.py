@@ -10,7 +10,7 @@ urlpatterns = [
     path('flexcard/', FlexCardView.as_view(), name='flexcard'),
     path('dashboard/<int:year>/<int:month>/<int:day>/', DashboardView.as_view(), name='dashboard'),
     path('userexercise/<int:id>/', UserExerciseView.as_view(), name='userexercise'),
-    path('accounts/', include('django.contrib.auth.urls')),
+    path('accounts/',  include('rest_auth.urls')),
     path('exercises/', ExerciseView.as_view(), name='exercises')
     # path('profile/', ProfileView.as_view(), name='profile')
 

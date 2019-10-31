@@ -51,7 +51,7 @@ class App extends React.Component {
   onClose(){
     let currentComponent = this;
     //request data from backend
-    axios.get("https://2212cbf8-96fe-48f2-aab4-35cc3bc1e3ad.mock.pstmn.io/exercises")
+    axios.get("http://localhost:8000/exercises")
     .then(function (response) {
         console.log(response.data);
         currentComponent.setState({exercises:response.data});
@@ -69,7 +69,7 @@ class App extends React.Component {
     // references are now sync'd and can be accessed.
     let currentComponent = this;
     //request data from backend
-    axios.get("https://2212cbf8-96fe-48f2-aab4-35cc3bc1e3ad.mock.pstmn.io/exercises")
+    axios.get("http://localhost:8000/exercises")
     .then(function (response) {
         console.log(response.data);
         currentComponent.setState({exercises:response.data});
@@ -104,7 +104,7 @@ class App extends React.Component {
     console.log(this.url);
     axios({
       method: 'post',
-      url:"https://2212cbf8-96fe-48f2-aab4-35cc3bc1e3ad.mock.pstmn.io"+fulldate[2]+"/"+fulldate[1]+"/"+fulldate[0]+"/",
+      url:"http://localhost:8000/"+fulldate[2]+"/"+fulldate[1]+"/"+fulldate[0]+"/",
       data: {
         title:name,
         weight:weight,

@@ -6,8 +6,9 @@ import { Formik } from 'formik';
 
 const RegisterInfo = (email, password) => {
   axios
-  .post('http://localhost:3000/accounts/signup', {
+  .post('http://localhost:8000/signup/', {
     email,
+    password,
     password,
   })
   .then(function() {
@@ -21,15 +22,13 @@ const Register = () => {
     <div id="logForm">
     <h1>Sign Up</h1>
     <Formik
-      initialValues={{email: '', password1: '', password2: ''}}
+      initialValues={{username: '', password1: '', password2: ''}}
       validate={values => {
         let errors = {};
 
         // validate email
         if (!values.email) {
           errors.email = "Enter an email address";
-        } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)) {
-          errors.email = 'Invalid email address';
         }
         
         // validate password

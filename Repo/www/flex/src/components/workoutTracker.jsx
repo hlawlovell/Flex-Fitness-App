@@ -43,7 +43,7 @@ class WorkoutTracker extends Component{
         var d = myDate;
         let currentComponent = this;
         //request data from backend
-        axios.get("https://2212cbf8-96fe-48f2-aab4-35cc3bc1e3ad.mock.pstmn.io/dashboard/"+d.getFullYear()+"/"+(myDate.getMonth()+1)+"/"+d.getDate()+"/")
+        axios.get("http://localhost:8000/dashboard/"+d.getFullYear()+"/"+(myDate.getMonth()+1)+"/"+d.getDate()+"/")
         .then(function (response) {
             currentComponent.setState({ date: Days[d.getDay()]+" - "+d.getDate()+"/"+(myDate.getMonth()+1)+"/"+d.getFullYear(),
             exercises:response.data.exercises});
@@ -59,7 +59,7 @@ class WorkoutTracker extends Component{
         d.setDate(d.getDate() - 1);
         let currentComponent = this;
         //request data from backend
-        axios.get("https://2212cbf8-96fe-48f2-aab4-35cc3bc1e3ad.mock.pstmn.io/dashboard/"+d.getFullYear()+"/"+(myDate.getMonth()+1)+"/"+d.getDate()+"/")
+        axios.get("http://localhost:8000/dashboard/"+d.getFullYear()+"/"+(myDate.getMonth()+1)+"/"+d.getDate()+"/")
         .then(function (response) {
             currentComponent.setState({exercises:[]});
             currentComponent.setState({ date: Days[d.getDay()]+" - "+d.getDate()+"/"+(myDate.getMonth()+1)+"/"+d.getFullYear(),
@@ -74,7 +74,7 @@ class WorkoutTracker extends Component{
         var d = myDate;
         d.setDate(d.getDate() + 1);
         let currentComponent = this;
-        axios.get("https://2212cbf8-96fe-48f2-aab4-35cc3bc1e3ad.mock.pstmn.io/dashboard/"+d.getFullYear()+"/"+(myDate.getMonth()+1)+"/"+d.getDate()+"/")
+        axios.get("http://localhost:8000/dashboard/"+d.getFullYear()+"/"+(myDate.getMonth()+1)+"/"+d.getDate()+"/")
         .then(function (response) {
             currentComponent.setState({exercises:[]});
             currentComponent.setState({ date: Days[d.getDay()]+" - "+d.getDate()+"/"+(myDate.getMonth()+1)+"/"+d.getFullYear(),

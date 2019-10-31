@@ -69,7 +69,7 @@ class ExerciseField extends React.Component {
     var self = this;
     axios({
       method: 'post',
-      url:"https://2212cbf8-96fe-48f2-aab4-35cc3bc1e3ad.mock.pstmn.io/exercises",
+      url:"http://localhost:8000/exercises/",
       data: {
         name:event.target.text.value
       },

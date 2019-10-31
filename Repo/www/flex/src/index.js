@@ -8,6 +8,7 @@ import Flex from "./pages/Flex";
 import Workout from "./pages/Workout";
 import Profile from "./pages/Profile";
 
+
 ReactDOM.render(
   <Router>
     <Login path="/" />
