@@ -40,7 +40,7 @@ const Register = () => {
         } else if (values.password1 !== values.password2) {
           errors.password2 = "Password does not match";
         }  
-          return errors
+        return errors
       }}
       onSubmit={values => {
         RegisterInfo(values.email, values.password);
