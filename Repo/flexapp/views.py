@@ -10,7 +10,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.renderers import JSONRenderer
 from rest_framework import status
-
+from rest_framework.permissions import IsAuthenticated
 
 from django.http import Http404, JsonResponse
 from django.shortcuts import redirect, render
@@ -65,6 +65,8 @@ class SignUpView(APIView):
 
 class ProfileView(APIView):
     #Get user profile
+    permission_classes = [IsAuthenticated]             
+
     def get(self, request):
 
         current_user = request.user
@@ -84,7 +86,7 @@ class ProfileView(APIView):
 
     #Update user profile
     def post(self, request):
-
+        permission_classes = [IsAuthenticated]
         current_user = request.user
         profile = Profile.objects.get(user=current_user)
 
@@ -106,7 +108,7 @@ class ProfileView(APIView):
 
 
 class UserExerciseView(APIView):
-
+    permission_classes = [IsAuthenticated]
     #Get user exercise by id
     def get(self, request, id=0):
 
@@ -159,8 +161,9 @@ class UserExerciseView(APIView):
         return JsonResponse(response)
 
 class DashboardView(APIView):
-
+    permission_classes = [IsAuthenticated]
     #Get user exercises by date
+
     def get(self, request, year=d.year, month=d.month, day=d.day):
         
         date = d(year, month, day)
@@ -204,7 +207,7 @@ class DashboardView(APIView):
 
 
 class ExerciseView(APIView):
-    
+    permission_classes = [IsAuthenticated]
     # Returns list of exercise names
     def get(self, request):
 

@@ -6,7 +6,9 @@ import classNames from 'classnames';
 import 'font-awesome/css/font-awesome.min.css';
 import axios from 'axios';
 import Collapsible from 'react-collapsible';
+import Cookies from 'js-cookie';
 
+axios.defaults.headers.common['Authorization'] = `Token ${Cookies.get('Authorization')}`
 
 const dayViewWrapStyle = {
     'paddingTop':'5%',
@@ -43,7 +45,11 @@ class WorkoutTracker extends Component{
         var d = myDate;
         let currentComponent = this;
         //request data from backend
-        axios.get("http://localhost:8000/dashboard/"+d.getFullYear()+"/"+(myDate.getMonth()+1)+"/"+d.getDate()+"/")
+        axios({
+            method: 'get',
+            url:"http://localhost:8000/dashboard/"+d.getFullYear()+"/"+(myDate.getMonth()+1)+"/"+d.getDate()+"/",
+            withCredentials: true
+          })
         .then(function (response) {
             currentComponent.setState({ date: Days[d.getDay()]+" - "+d.getDate()+"/"+(myDate.getMonth()+1)+"/"+d.getFullYear(),
             exercises:response.data.exercises});
@@ -59,7 +65,11 @@ class WorkoutTracker extends Component{
         d.setDate(d.getDate() - 1);
         let currentComponent = this;
         //request data from backend
-        axios.get("http://localhost:8000/dashboard/"+d.getFullYear()+"/"+(myDate.getMonth()+1)+"/"+d.getDate()+"/")
+        axios({
+            method: 'get',
+            url:"http://localhost:8000/dashboard/"+d.getFullYear()+"/"+(myDate.getMonth()+1)+"/"+d.getDate()+"/",
+            withCredentials: true
+          })
         .then(function (response) {
             currentComponent.setState({exercises:[]});
             currentComponent.setState({ date: Days[d.getDay()]+" - "+d.getDate()+"/"+(myDate.getMonth()+1)+"/"+d.getFullYear(),
@@ -74,8 +84,11 @@ class WorkoutTracker extends Component{
         var d = myDate;
         d.setDate(d.getDate() + 1);
         let currentComponent = this;
-        axios.get("http://localhost:8000/dashboard/"+d.getFullYear()+"/"+(myDate.getMonth()+1)+"/"+d.getDate()+"/")
-        .then(function (response) {
+        axios({
+            method: 'get',
+            url:"http://localhost:8000/dashboard/"+d.getFullYear()+"/"+(myDate.getMonth()+1)+"/"+d.getDate()+"/",
+            withCredentials: true
+          })        .then(function (response) {
             currentComponent.setState({exercises:[]});
             currentComponent.setState({ date: Days[d.getDay()]+" - "+d.getDate()+"/"+(myDate.getMonth()+1)+"/"+d.getFullYear(),
             exercises:response.data.exercises});

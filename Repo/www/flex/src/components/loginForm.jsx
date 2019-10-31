@@ -9,13 +9,13 @@ import Cookies from 'js-cookie';
 
 
 const login = (formData) => {
-  var temptoke = Cookies.get('csrftoken')
+
   var tuser = formData.get('username')
   var tpas = formData.get('password')
-  var options = { content: formData };
   axios({
     method: 'post',
     url:"http://localhost:8000/accounts/login/",
+    withCredentials: true,
     data: {
       username:tuser,
       email:"",
@@ -25,7 +25,8 @@ const login = (formData) => {
       headers:{'Content-Type':'application/json'}
     }
   })
-  .then(function() {
+  .then(function(response) {
+    Cookies.set('Authorization',response.data.key)
     window.location.href = '/flex';
   });
 }
@@ -36,13 +37,7 @@ class LoginForm extends Component {
       this.handleSubmit = this.handleSubmit.bind(this);
     }
     componentDidMount() {
-      let currentComponent = this;
-      //request data from backend
-      axios.get('http://localhost:8000/accounts/login/', {  withCredentials: true, headers:{}
-    })
-      .then(response => {
-        console.log(response)
-        })
+
   }
   
     handleSubmit(e) {
@@ -120,7 +115,6 @@ class LoginForm extends Component {
           //Changed these to values. to get rid of error
           login(values.username, values.password);
         }}>
-        >
         Login
       </Button>
       <Button className="formButton" variant="primary" type="submit" href="/register">

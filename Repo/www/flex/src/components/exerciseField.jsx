@@ -4,8 +4,9 @@ import classNames from 'classnames';
 import '../components/workout.css'
 import { ListGroup, Button, Input } from "react-bootstrap";
 import axios from 'axios';
+import Cookies from 'js-cookie';
 
-
+axios.defaults.headers.common['Authorization'] = 'Token '+Cookies.get('Authorization') 
 
 const customStyles = {
   content : {
@@ -70,6 +71,7 @@ class ExerciseField extends React.Component {
     axios({
       method: 'post',
       url:"http://localhost:8000/exercises/",
+      withCredentials: true,
       data: {
         name:event.target.text.value
       },

@@ -2,13 +2,11 @@ import React from 'react';
 import Modal from 'react-modal';
 import classNames from 'classnames';
 import '../components/workout.css'
-import { ListGroup, Button, Input } from "react-bootstrap";
 import axios from 'axios';
-import exerciseField from '../components/exerciseField'
 import ExerciseField from '../components/exerciseField';
+import Cookies from 'js-cookie';
 
-
-
+axios.defaults.headers.common['Authorization'] = 'Token '+Cookies.get('Authorization') 
 const customStyles = {
   content : {
     top                   : '50%',
@@ -51,7 +49,11 @@ class App extends React.Component {
   onClose(){
     let currentComponent = this;
     //request data from backend
-    axios.get("http://localhost:8000/exercises")
+    axios({
+      method: 'get',
+      url:"http://localhost:8000/exercises/",
+      withCredentials: true
+    })  
     .then(function (response) {
         console.log(response.data);
         currentComponent.setState({exercises:response.data});
@@ -69,7 +71,11 @@ class App extends React.Component {
     // references are now sync'd and can be accessed.
     let currentComponent = this;
     //request data from backend
-    axios.get("http://localhost:8000/exercises")
+    axios({
+      method: 'get',
+      url:"http://localhost:8000/exercises/",
+      withCredentials: true
+    })  
     .then(function (response) {
         console.log(response.data);
         currentComponent.setState({exercises:response.data});
@@ -105,6 +111,7 @@ class App extends React.Component {
     axios({
       method: 'post',
       url:"http://localhost:8000/"+fulldate[2]+"/"+fulldate[1]+"/"+fulldate[0]+"/",
+      withCredentials: true,
       data: {
         title:name,
         weight:weight,
@@ -123,7 +130,6 @@ class App extends React.Component {
   componentWillReceiveProps(props) {
     if (props.url !== this.url) {
       this.url = props.url;
-      alert(this.url);
     }
   }
 
