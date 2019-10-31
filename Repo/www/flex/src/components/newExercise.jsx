@@ -55,7 +55,6 @@ class App extends React.Component {
       withCredentials: true
     })  
     .then(function (response) {
-        console.log(response.data);
         currentComponent.setState({exercises:response.data});
       })
       .catch(function (error) {
@@ -107,10 +106,9 @@ class App extends React.Component {
     var fulldate = appends[1].substring(1);
     fulldate = fulldate.split("/");
 ;    
-    console.log(this.url);
     axios({
       method: 'post',
-      url:"http://localhost:8000/"+fulldate[2]+"/"+fulldate[1]+"/"+fulldate[0]+"/",
+      url:"http://localhost:8000/dashboard/"+fulldate[2]+"/"+fulldate[1]+"/"+fulldate[0]+"/",
       withCredentials: true,
       data: {
         title:name,
@@ -122,7 +120,6 @@ class App extends React.Component {
       }
     })
     .then(function(response){
-      console.log(response);
       self.closeModal();
     })
   }
