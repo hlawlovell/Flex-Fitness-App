@@ -1,7 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
 
-
 # Create your models here.
 class Profile(models.Model):
 
@@ -19,6 +18,7 @@ class Profile(models.Model):
         return self.user.username
 class Exercise(models.Model):
     name = models.CharField(max_length=50, unique=True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
     isModifiable = models.BooleanField(default=False)
 
     def __str__(self):
@@ -27,11 +27,8 @@ class Exercise(models.Model):
 class UserExercise(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
     exercise = models.ForeignKey(Exercise, on_delete=models.CASCADE)
-    date = models.DateField(auto_now_add=True)
+    date = models.DateField()   
     sets = models.PositiveSmallIntegerField(null=True)
-
-    def __str__(self):
-        return self.date
 
     def __str__(self):
         return self.exercise.name
@@ -42,5 +39,9 @@ class LogEntries(models.Model):
     weight = models.DecimalField(max_digits=5, decimal_places=2)
     reps = models.PositiveSmallIntegerField(null=True)
 
+
+
     def __str__(self):
-        return self.userExercise.date
+        return self.userExercise.exercise.name
+
+    

@@ -9,15 +9,21 @@ from rest_framework import viewsets
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.renderers import JSONRenderer
+from rest_framework import status
+
 
 from django.http import Http404
 from django.shortcuts import redirect, render
 from django.contrib import messages
 from django.contrib.auth import login
 from django.contrib.auth.forms import UserCreationForm
+from django.db.models import Q
+
+
+
 
 from .models import *
-
+from .serializers import *
 
 class SignUpView(View):
 
@@ -87,20 +93,11 @@ class StatsView(View):
             profile.save()
         response = {
             'profile': profile
-        }
+        } 
         return render(request, 'stats.html', response)
 
-class DashboardView(View):
 
-    #Get user exercises by date
-    def get(self, request, year=d.year, month=d.month, day=d.day):
-        current_user = request.user
-        date = d(year, month, day)
-        user_exercise = UserExercise.objects.filter(user=current_user, date=date)
-        response = {
-            'user_exercises': user_exercise
-        }
-        return render(request, 'dashboard.html', response)
+
 
 class UserExerciseView(View):
 
@@ -140,31 +137,153 @@ class UserExerciseView(View):
         user_exercise.save()
         messages.success(request, 'User exercise created.')
         return redirect('dashboard.html', date=user_exercise.date)
+
+class DashboardView(APIView):
+
+    #Get user exercises by date
+    def get(self, request, year=d.year, month=d.month, day=d.day):
+        
+        date = d(year, month, day)
+        user_exercises = UserExercise.objects.filter(user=request.user, date=date)
+        for i in user_exercises:
+            print(i)
+        dash_exercises = []
+        for ex in user_exercises:
+            sets = []
+            set_objects = ex.logentries_set.all()
+            for s in set_objects:
+                set_entry = "%d:%.2f" % (s.reps, s.weight)
+                sets.append(set_entry)
+
+            ex_name = ex.exercise.name
+            exercise = {"title": ex_name, "sets": sets}
+            dash_exercises.append(exercise)
+            
+
+        dash_response = {"exercises": dash_exercises}
+        return Response(dash_response)
+        
+    # Post 
+    def post(self, request, year=d.year, month=d.month, day=d.day):
+        date = d(year, month, day)
+        current_user = request.user
+        serializer = LogEntrySerializer(data=request.data)
+
+        if serializer.is_valid():
+            name = serializer.data.get('title')
+            weight = serializer.data.get('weight')
+            reps = serializer.data.get('reps')
+            user_exercise = UserExercise.objects.filter(user=current_user, exercise__name=name, date=date)
+            if user_exercise.exists():
+                new_entry = LogEntries.objects.create(userExercise = user_exercise[0], weight = weight, reps = reps)
+            else:
+                exercise = Exercise.objects.get(name=name)
+                new_user_exercise = UserExercise.objects.create(user=current_user, exercise=exercise, date=date)
+                new_entry = LogEntries.objects.create(userExercise = new_user_exercise, weight = weight, reps = reps)
+
+            return Response({"status": "success"}, status=status.HTTP_201_CREATED)
+        return Response({"status": "failed"}, status=status.HTTP_400_BAD_REQUEST)
+
+
+class ExerciseView(APIView):
+    
+    # Returns list of exercise names
+    def get(self, request):
+
+        exercises = Exercise.objects.filter(Q(user=request.user) | Q(isModifiable=False))
+        serializer = ExerciseSerializer(exercises, many=True)
+        return Response(serializer.data)
+
+    # Add exercise to list
+    def post(self, request):
+        serializer = ExerciseSerializer(data=request.data)
+        if serializer.is_valid():
+            name = serializer.data.get('name')
+            new_exercise = Exercise.objects.create(name=name , user=request.user, isModifiable=True)
+            return Response({"status": "success"}, status=status.HTTP_201_CREATED)
+        return Response({"status": "failed"}, status=status.HTTP_400_BAD_REQUEST)
+
+
+
         
 class FlexCardView(APIView):
     def get(self, request):
 
-        # Return 6 {bench, squat, deadlift} objects
-        bench = FlexSerializer(LogEntries.objects.filter(exercise__exercise__name='Bench').order_by('-id')[:6], many=True)
-        squat = FlexSerializer(LogEntries.objects.filter(exercise__exercise__name='Squat').order_by('-id')[:6], many=True)
-        deadlift = FlexSerializer(LogEntries.objects.filter(exercise__exercise__name='Deadlift').order_by('-id')[:6], many=True)
 
-        bench_orm = get_orm(bench.data)
-        squat_orm = get_orm(squat.data)
-        deadlift_orm = get_orm(deadlift.data)
+        # serializer = UserExerciseSerializer(UserExercise.objects.filter(user=request.user), many=True)
+        # bench = serializer.data
 
-        content = {"bench" : bench_orm, "squat" : squat_orm, "deadlift" : deadlift_orm}
-        return Response(content)
+
+        bench_exercise = UserExercise.objects.filter(user=request.user, exercise__name='Bench').order_by('-id')[:6]
+        squat_exercise = UserExercise.objects.filter(user=request.user, exercise__name='Squat').order_by('-id')[:6]
+        deadlift_exercise = UserExercise.objects.filter(user=request.user, exercise__name='Squat').order_by('-id')[:6]
+
+        bench_orms = get_orms(bench_exercise)
+        squat_orms = get_orms(squat_exercise)
+        deadlift_orms = get_orms(deadlift_exercise)
+
+        profile = Profile.objects.get(user=request.user)
+        flexscore = get_flexscore(bench_orms, squat_orms, deadlift_orms, profile.weight)
+
+        content = {"bench": bench_orms, "squat": squat_orms, "deadlift": deadlift_orms, "flexscores": flexscore}
+
         
-# Calculate one rep max
-def get_orm(sets):
+        
+        return Response(content)
+
+def get_orms(exercise):
+
     orm_list = []
-    for i in sets:
-        weight = float(i.get("weight"))
-        reps = i.get("reps")
+
+
+    for e in exercise:
+        sets = FlexSerializer(e.logentries_set.all(), many=True)
+        e_orm = get_max_orm(sets.data)
+        orm_list.append(e_orm)
+    
+    return orm_list
+    
+
+# Return highest one rep max given a number of 'sets'
+def get_max_orm(sets):
+    max_orm = 0
+    for s in sets:
+        weight = float(s.get("weight"))
+        reps = s.get("reps")
         if reps == 1:
             orm_list.append(int(weight))
             continue
         orm = int(weight * (1+reps/30.0))
-        orm_list.append(orm)
-    return orm_list
+        if orm > max_orm:
+            max_orm = orm
+    return max_orm
+
+def get_flexscore(bench, squat, deadlift, weight):
+    flexscores = []
+    min_range = min(len(bench), len(squat), len(deadlift))
+    for i in range(min_range):
+        total = bench[i] + squat[i] + deadlift[i]
+        wilks = get_wilks(total, weight)
+        flexscores.append(wilks)
+
+    return flexscores
+
+def get_wilks(total, weight):
+
+    weight = float(weight)
+    a = -216.0475144
+    b = 16.2606339
+    c = -0.002388645
+    d = -0.00113732
+    e = 0.00000701863
+    f = -000.00000001291 
+
+    wilks_coef = 500 / (a + (b * weight) + (c * weight ** 2) + (d * weight ** 3) + (e * weight ** 4) + (f * weight ** 5))
+    wilks_total = total * wilks_coef
+    
+    return int(wilks_total)
+    
+
+
+    
+
