@@ -36,16 +36,15 @@ class WorkoutTracker extends Component{
             date: Days[myDate.getDay()]+" - "+myDate.getDate()+"/"+(myDate.getMonth()+1)+"/"+myDate.getFullYear(),
             exercises: []
         }
+
     }
 
     componentDidMount() {
         var d = myDate;
         let currentComponent = this;
         //request data from backend
-        axios.get("https://45485187-422b-4292-9c00-03bb45619368.mock.pstmn.io/dashboard/"+d.getFullYear()+"/"+(myDate.getMonth()+1)+"/"+d.getDate()+"/")
+        axios.get("https://2212cbf8-96fe-48f2-aab4-35cc3bc1e3ad.mock.pstmn.io/dashboard/"+d.getFullYear()+"/"+(myDate.getMonth()+1)+"/"+d.getDate()+"/")
         .then(function (response) {
-            
-            console.log(response.data.exercises);
             currentComponent.setState({ date: Days[d.getDay()]+" - "+d.getDate()+"/"+(myDate.getMonth()+1)+"/"+d.getFullYear(),
             exercises:response.data.exercises});
           })
@@ -60,7 +59,7 @@ class WorkoutTracker extends Component{
         d.setDate(d.getDate() - 1);
         let currentComponent = this;
         //request data from backend
-        axios.get("https://45485187-422b-4292-9c00-03bb45619368.mock.pstmn.io/dashboard/"+d.getFullYear()+"/"+(myDate.getMonth()+1)+"/"+d.getDate()+"/")
+        axios.get("https://2212cbf8-96fe-48f2-aab4-35cc3bc1e3ad.mock.pstmn.io/dashboard/"+d.getFullYear()+"/"+(myDate.getMonth()+1)+"/"+d.getDate()+"/")
         .then(function (response) {
             currentComponent.setState({exercises:[]});
             currentComponent.setState({ date: Days[d.getDay()]+" - "+d.getDate()+"/"+(myDate.getMonth()+1)+"/"+d.getFullYear(),
@@ -75,7 +74,7 @@ class WorkoutTracker extends Component{
         var d = myDate;
         d.setDate(d.getDate() + 1);
         let currentComponent = this;
-        axios.get("https://45485187-422b-4292-9c00-03bb45619368.mock.pstmn.io/dashboard/"+d.getFullYear()+"/"+(myDate.getMonth()+1)+"/"+d.getDate()+"/")
+        axios.get("https://2212cbf8-96fe-48f2-aab4-35cc3bc1e3ad.mock.pstmn.io/dashboard/"+d.getFullYear()+"/"+(myDate.getMonth()+1)+"/"+d.getDate()+"/")
         .then(function (response) {
             currentComponent.setState({exercises:[]});
             currentComponent.setState({ date: Days[d.getDay()]+" - "+d.getDate()+"/"+(myDate.getMonth()+1)+"/"+d.getFullYear(),
@@ -86,21 +85,22 @@ class WorkoutTracker extends Component{
             console.log(error);
           });
     };
-
-
-
+    handleDelete = () => {
+        alert("Button Clicked!");
+      };
     render(){
 
         const items = this.state.exercises.map(function(item){
+            
         const Trigger = () => <div><a class="new1">{item.title}</a><a className="new2">{item.sets.length}</a></div>;
 
              return(
-                <ListGroup.Item className={classNames("noselect","exerciseWrapper")}>
+                <ListGroup.Item className={classNames("noselect","exerciseWrapper")} onDelete={this.handleDelete} >
                     <Collapsible className={classNames("noselect","exerciseLabel")} trigger={<Trigger />}>
                     <p className="exerciseRepsWrap">{item.sets.map(function(set){
                         return(
                             <a className="exerciseReps">{set[0]+"x"+set.substring(2)}</a>
-                        )})}<a className={classNames("fa fa-trash","deleteWorkout")}></a></p>
+                        )})}<a className={classNames("fa fa-trash","deleteWorkout")} onClick={this.deleteEntry}></a></p>
                     </Collapsible>
                 </ListGroup.Item>     
                 );
@@ -118,7 +118,7 @@ class WorkoutTracker extends Component{
                         </ListGroup>
                     </div>
                     <div id="adButtonWrap" >
-                        <App />
+                        <App url={this.state.date} />
                     </div>
                 </Container> 
             </div>

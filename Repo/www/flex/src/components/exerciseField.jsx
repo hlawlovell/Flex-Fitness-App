@@ -69,7 +69,7 @@ class ExerciseField extends React.Component {
     var self = this;
     axios({
       method: 'post',
-      url:"https://6755e99e-1a84-483c-9a22-1b38efb2fe1e.mock.pstmn.io/exercises",
+      url:"https://2212cbf8-96fe-48f2-aab4-35cc3bc1e3ad.mock.pstmn.io/exercises",
       data: {
         name:event.target.text.value
       },
@@ -79,7 +79,9 @@ class ExerciseField extends React.Component {
     })
     .then(function(response){
       console.log(response);
-      self.closeModal();
+      if(response.status=="success"){
+        self.closeModal();
+      }
     })
 
   }

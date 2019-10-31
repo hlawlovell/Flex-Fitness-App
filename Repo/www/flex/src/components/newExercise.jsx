@@ -31,13 +31,14 @@ const customStyles = {
 Modal.setAppElement(document.getElementById('root'));
  
 class App extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
  
     this.state = {
       modalIsOpen: false,
-      exercises: []
+      exercises: [],
     };
+    this.url = this.props.url;
     this.onClose = this.onClose.bind(this);
     this.openModal = this.openModal.bind(this);
     this.afterOpenModal = this.afterOpenModal.bind(this);
@@ -50,7 +51,7 @@ class App extends React.Component {
   onClose(){
     let currentComponent = this;
     //request data from backend
-    axios.get("https://45485187-422b-4292-9c00-03bb45619368.mock.pstmn.io/exercises")
+    axios.get("https://2212cbf8-96fe-48f2-aab4-35cc3bc1e3ad.mock.pstmn.io/exercises")
     .then(function (response) {
         console.log(response.data);
         currentComponent.setState({exercises:response.data});
@@ -59,7 +60,7 @@ class App extends React.Component {
         console.log(error);
       });
   }
- 
+
   openModal() {
     this.setState({modalIsOpen: true});
   }
@@ -68,7 +69,7 @@ class App extends React.Component {
     // references are now sync'd and can be accessed.
     let currentComponent = this;
     //request data from backend
-    axios.get("https://45485187-422b-4292-9c00-03bb45619368.mock.pstmn.io/exercises")
+    axios.get("https://2212cbf8-96fe-48f2-aab4-35cc3bc1e3ad.mock.pstmn.io/exercises")
     .then(function (response) {
         console.log(response.data);
         currentComponent.setState({exercises:response.data});
@@ -87,21 +88,27 @@ class App extends React.Component {
 
   handleChange(event) {
     this.setState({value: event.target.value});
+    
   }
 
   handleSubmit(event) {
     event.preventDefault();
     const name = event.target.selected.value;
-    const reps = event.target.reps.value;
-    const weight = event.target.weight.value;
+    const reps = event.target.Reps.value;
+    const weight = event.target.Weight.value;
     var self = this;
+    var appends = this.url.split("-");
+    var fulldate = appends[1].substring(1);
+    fulldate = fulldate.split("/");
+;    
+    console.log(this.url);
     axios({
       method: 'post',
-      url:"https://6755e99e-1a84-483c-9a22-1b38efb2fe1e.mock.pstmn.io/exercises",
+      url:"https://2212cbf8-96fe-48f2-aab4-35cc3bc1e3ad.mock.pstmn.io"+fulldate[2]+"/"+fulldate[1]+"/"+fulldate[0]+"/",
       data: {
-        title:"bench",
-        reps:10,
-        weight:200
+        title:name,
+        weight:weight,
+        reps:reps
       },
       config:{
         headers:{'Content-Type':'application/json'}
@@ -113,7 +120,12 @@ class App extends React.Component {
     })
   }
 
-
+  componentWillReceiveProps(props) {
+    if (props.url !== this.url) {
+      this.url = props.url;
+      alert(this.url);
+    }
+  }
 
  
   render() {
@@ -140,7 +152,7 @@ class App extends React.Component {
           </label >
           <div id="adExButtonWrap" ><ExerciseField  onClose={this.onClose}/></div>
           <div class="exerciseInput">Reps:<input type="number" step="1" name="Reps" required={true} /></div>
-          <div class="exerciseInput">Weight:<input type="number" step="1" name="Weight" required={true} /></div>
+          <div class="exerciseInput">Weight:<input type="float" name="Weight" required={true} /></div>
           <div  id="exerciseSave"><button className={classNames("fa fa-save fa-lg","formButton")} type="submit" name="submit"></button></div>
           <button  id="closeButton" className={classNames("fa fa-times fa-1x","formButton")}onClick={this.closeModal}></button>
           </form>
