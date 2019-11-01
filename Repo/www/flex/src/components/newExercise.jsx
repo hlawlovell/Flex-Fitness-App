@@ -6,7 +6,9 @@ import axios from 'axios';
 import ExerciseField from '../components/exerciseField';
 import Cookies from 'js-cookie';
 
-axios.defaults.headers.common['Authorization'] = 'Token '+Cookies.get('Authorization') 
+axios.defaults.headers.common['Authorization'] = 'Token '+Cookies.get('Authorization')
+axios.defaults.headers.common['X-CSRFToken'] = Cookies.get('csrftoken') 
+
 const customStyles = {
   content : {
     top                   : '50%',
@@ -37,6 +39,7 @@ class App extends React.Component {
       exercises: [],
     };
     this.url = this.props.url;
+    this.parentClose = this.props.parentClose;
     this.onClose = this.onClose.bind(this);
     this.openModal = this.openModal.bind(this);
     this.afterOpenModal = this.afterOpenModal.bind(this);
@@ -62,6 +65,8 @@ class App extends React.Component {
       });
   }
 
+
+
   openModal() {
     this.setState({modalIsOpen: true});
   }
@@ -85,6 +90,7 @@ class App extends React.Component {
   }
  
   closeModal() {
+    this.parentClose();
     this.setState({modalIsOpen: false});
   }
   newType() {
@@ -105,6 +111,8 @@ class App extends React.Component {
     var appends = this.url.split("-");
     var fulldate = appends[1].substring(1);
     fulldate = fulldate.split("/");
+    this.parentClose();
+
 ;    
     axios({
       method: 'post',
@@ -156,7 +164,7 @@ class App extends React.Component {
           <div id="adExButtonWrap" ><ExerciseField  onClose={this.onClose}/></div>
           <div class="exerciseInput">Reps:<input type="number" step="1" name="Reps" required={true} /></div>
           <div class="exerciseInput">Weight:<input type="float" name="Weight" required={true} /></div>
-          <div  id="exerciseSave"><button className={classNames("fa fa-save fa-lg","formButton")} type="submit" name="submit"></button></div>
+          <div  id="exerciseSave"><button className={classNames("fa fa-save fa-lg","formButton")} type="submit" name="submit" ></button></div>
           <button  id="closeButton" className={classNames("fa fa-times fa-1x","formButton")}onClick={this.closeModal}></button>
           </form>
 

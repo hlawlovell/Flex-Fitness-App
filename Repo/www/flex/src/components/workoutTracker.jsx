@@ -9,6 +9,7 @@ import Collapsible from 'react-collapsible';
 import Cookies from 'js-cookie';
 
 axios.defaults.headers.common['Authorization'] = `Token ${Cookies.get('Authorization')}`
+axios.defaults.headers.common['X-CSRFToken'] = Cookies.get('csrftoken') 
 
 const dayViewWrapStyle = {
     'paddingTop':'5%',
@@ -38,9 +39,27 @@ class WorkoutTracker extends Component{
             date: Days[myDate.getDay()]+" - "+myDate.getDate()+"/"+(myDate.getMonth()+1)+"/"+myDate.getFullYear(),
             exercises: []
         }
+        this.parentClose = this.parentClose.bind(this);
+
 
     }
-
+    parentClose(){
+        var d = myDate;
+        let currentComponent = this;
+        //request data from backend
+        axios({
+            method: 'get',
+            url:"http://localhost:8000/dashboard/"+d.getFullYear()+"/"+(myDate.getMonth()+1)+"/"+d.getDate()+"/",
+            withCredentials: true
+          })
+        .then(function (response) {
+            currentComponent.setState({ date: Days[d.getDay()]+" - "+d.getDate()+"/"+(myDate.getMonth()+1)+"/"+d.getFullYear(),
+            exercises:response.data.exercises});
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
+    }
     componentDidMount() {
         var d = myDate;
         let currentComponent = this;
@@ -57,6 +76,25 @@ class WorkoutTracker extends Component{
           .catch(function (error) {
             console.log(error);
           });
+    }
+
+    onClose(){
+        var d = myDate;
+        let currentComponent = this;
+        //request data from backend
+        axios({
+            method: 'get',
+            url:"http://localhost:8000/dashboard/"+d.getFullYear()+"/"+(myDate.getMonth()+1)+"/"+d.getDate()+"/",
+            withCredentials: true
+          })
+        .then(function (response) {
+            currentComponent.setState({ date: Days[d.getDay()]+" - "+d.getDate()+"/"+(myDate.getMonth()+1)+"/"+d.getFullYear(),
+            exercises:response.data.exercises});
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
+
     }
 
     previousDay = () => {
@@ -88,7 +126,8 @@ class WorkoutTracker extends Component{
             method: 'get',
             url:"http://localhost:8000/dashboard/"+d.getFullYear()+"/"+(myDate.getMonth()+1)+"/"+d.getDate()+"/",
             withCredentials: true
-          })        .then(function (response) {
+          })        
+          .then(function (response) {
             currentComponent.setState({exercises:[]});
             currentComponent.setState({ date: Days[d.getDay()]+" - "+d.getDate()+"/"+(myDate.getMonth()+1)+"/"+d.getFullYear(),
             exercises:response.data.exercises});
@@ -98,9 +137,7 @@ class WorkoutTracker extends Component{
             console.log(error);
           });
     };
-    handleDelete = () => {
-        alert("Button Clicked!");
-      };
+
     render(){
 
         const items = this.state.exercises.map(function(item){
@@ -108,12 +145,12 @@ class WorkoutTracker extends Component{
         const Trigger = () => <div><a class="new1">{item.title}</a><a className="new2">{item.sets.length}</a></div>;
 
              return(
-                <ListGroup.Item className={classNames("noselect","exerciseWrapper")} onDelete={this.handleDelete} >
+                <ListGroup.Item className={classNames("noselect","exerciseWrapper")}  >
                     <Collapsible className={classNames("noselect","exerciseLabel")} trigger={<Trigger />}>
                     <p className="exerciseRepsWrap">{item.sets.map(function(set){
                         return(
                             <a className="exerciseReps">{set[0]+"x"+set.substring(2)}</a>
-                        )})}<a className={classNames("fa fa-trash","deleteWorkout")} onClick={this.deleteEntry}></a></p>
+                        )})}<a className={classNames("fa fa-trash","deleteWorkout")} ></a></p>
                     </Collapsible>
                 </ListGroup.Item>     
                 );
@@ -131,7 +168,7 @@ class WorkoutTracker extends Component{
                         </ListGroup>
                     </div>
                     <div id="adButtonWrap" >
-                        <App url={this.state.date} />
+                        <App url={this.state.date} parentClose={this.parentClose} />
                     </div>
                 </Container> 
             </div>
