@@ -81,10 +81,7 @@ class ExerciseField extends React.Component {
       }
     })
     .then(function(response){
-      console.log(response);
-      if(response.status=="success"){
         self.closeModal();
-      }
     })
 
   }

@@ -235,9 +235,9 @@ class FlexCardView(APIView):
         # bench = serializer.data
 
 
-        bench_exercise = UserExercise.objects.filter(user=request.user, exercise__name='Bench').order_by('-id')[:6]
-        squat_exercise = UserExercise.objects.filter(user=request.user, exercise__name='Squat').order_by('-id')[:6]
-        deadlift_exercise = UserExercise.objects.filter(user=request.user, exercise__name='Squat').order_by('-id')[:6]
+        bench_exercise = UserExercise.objects.filter(user=request.user, exercise__name='bench').order_by('-id')[:8]
+        squat_exercise = UserExercise.objects.filter(user=request.user, exercise__name='squats').order_by('-id')[:8]
+        deadlift_exercise = UserExercise.objects.filter(user=request.user, exercise__name='deadlift').order_by('-id')[:8]
 
         bench_orms = get_orms(bench_exercise)
         squat_orms = get_orms(squat_exercise)

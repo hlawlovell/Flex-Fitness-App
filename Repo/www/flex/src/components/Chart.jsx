@@ -2,6 +2,7 @@ import React, {Component} from "react"
 import {Line} from 'react-chartjs-2';
 import { Container, Row, Col } from "react-bootstrap";
 import '../components/Home.css'
+import axios from 'axios';
 
 
 class Chart extends Component{
@@ -14,63 +15,176 @@ class Chart extends Component{
                     label: "",
                     backgroundColor: 'rgb(86, 199, 201)',
                     borderColor:'white',
-                    data: [195,200,200,205,205,207,210,210],
+                    data:[],
                 }]     
             }
         }
     }
 
+    componentDidMount() {
+        let currentComponent = this;
+        //request data from backend
+        axios({
+            method: 'get',
+            url:"http://localhost:8000/flexcard/",
+            withCredentials: true
+          })
+        .then(function (response) {
+            var result = Object.values(response.data.flexscores);
+            var i=8;
+            if(result.length<i)
+                while(result.length<i)
+                    result.unshift(0)
+            else
+                result = result.slice(result.length-9,result.length-1)
+            currentComponent.setState({
+                chartData:{
+                    labels: ["", "", "", "", "", "", ""],
+                    datasets: [{
+                        label: "",
+                        backgroundColor: 'rgb(86, 199, 201)',
+                        borderColor:'white',
+                        data:result,
+                    }]     
+                }
+            })
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
+    }
+
     loadSquats = () => {
-        this.setState({
-            chartData:{
-                labels: ["", "", "", "", "", "", ""],
-                datasets: [{
-                label: "",
-                backgroundColor: 'rgb(170, 106, 198)',
-                borderColor:'white',
-                data: [180,190,190,200,200,202,205,210],
-                }]     
-            }
-        })
+        //request data from backend
+        let currentComponent = this;
+
+        axios({
+            method: 'get',
+            url:"http://localhost:8000/flexcard/",
+            withCredentials: true
+          })
+        .then(function (response) {
+            var result = Object.values(response.data.squat);
+            var i=8;
+            if(result.length<i)
+                while(result.length<i)
+                    result.unshift(0)
+            else
+                result = result.slice(result.length-9,result.length-1)
+            currentComponent.setState({
+                chartData:{
+                    labels: ["", "", "", "", "", "", ""],
+                    datasets: [{
+                        label: "",
+                        backgroundColor: 'rgb(170, 106, 198)',
+                        borderColor:'white',
+                        data:result
+                    }]     
+                }
+            })
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
     }
+    
     loadBench = () => {
-        this.setState({
-            chartData:{
-                labels: ["", "", "", "", "", "", ""],
-                datasets: [{
-                label: "",
-                backgroundColor: 'rgb(247, 122, 140)',
-                borderColor:'white',
-                data: [120,125,130,130,132,138,140,140],
-                }]     
-            }
-        })
+        let currentComponent = this;
+
+        axios({
+            method: 'get',
+            url:"http://localhost:8000/flexcard/",
+            withCredentials: true
+          })
+        .then(function (response) {
+            var result = Object.values(response.data.bench);
+            var i=8;
+            if(result.length<i)
+                while(result.length<i)
+                    result.unshift(0)
+            else
+                result = result.slice(result.length-9,result.length-1)
+            currentComponent.setState({
+                chartData:{
+                    labels: ["", "", "", "", "", "", ""],
+                    datasets: [{
+                        label: "",
+                        backgroundColor: 'rgb(119, 183, 219)',
+                        borderColor:'white',
+                        data:result,
+                    }]     
+                }
+            })
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
     }
+    
     loadDeads = () => {
-        this.setState({
-            chartData:{
-                labels: ["", "", "", "", "", "", ""],
-                datasets: [{
-                label: "",
-                backgroundColor: 'rgb(119, 183, 219)',
-                borderColor:'white',
-                data: [260,265,265,270,270,275,280,280],
-                }]     
-            }
-        })
+        let currentComponent = this;
+
+        axios({
+            method: 'get',
+            url:"http://localhost:8000/flexcard/",
+            withCredentials: true
+          })
+        .then(function (response) {
+            var result = Object.values(response.data.deadlift);
+            var i=8;
+            if(result.length<i)
+                while(result.length<i)
+                    result.unshift(0)
+            else
+                result = result.slice(result.length-9,result.length-1)
+            currentComponent.setState({
+                chartData:{
+                    labels: ["", "", "", "", "", "", ""],
+                    datasets: [{
+                        label: "",
+                        backgroundColor: 'rgb(86, 199, 201)',
+                        borderColor:'white',
+                        data:result,
+                    }]     
+                }
+            })
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
     }
+   
     loadFlex = () => {
-        this.setState({
-            chartData:{
-                labels: ["", "", "", "", "", "", ""],
-                datasets: [{
-                label: "",
-                backgroundColor: 'rgb(86, 199, 201)',
-                borderColor:'white',
-                data: [195,200,200,205,205,207,210,210],
-                }]     
-            }
-        })
+        let currentComponent = this;
+
+        axios({
+            method: 'get',
+            url:"http://localhost:8000/flexcard/",
+            withCredentials: true
+          })
+        .then(function (response) {
+            var result = Object.values(response.data.flexscores);
+            var i=8;
+            if(result.length<i)
+                while(result.length<i)
+                    result.unshift(0)
+            else
+                result = result.slice(result.length-9,result.length-1)
+            currentComponent.setState({
+                chartData:{
+                    labels: ["", "", "", "", "", "", ""],
+                    datasets: [{
+                        label: "",
+                        backgroundColor: ' rgb(86, 199, 201)',
+                        borderColor:'white',
+                        data:response.result,
+                    }]     
+                }
+            })
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
     }
 
     render(){

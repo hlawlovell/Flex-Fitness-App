@@ -37,7 +37,9 @@ class LoginForm extends Component {
       this.handleSubmit = this.handleSubmit.bind(this);
     }
     componentDidMount() {
-      
+      Cookies.remove('sessionid')
+      Cookies.remove('csrftoken')
+      Cookies.remove('Authorization')
 
   }
   
