@@ -37,9 +37,10 @@ class Chart extends Component{
                     result.unshift(0)
             else
                 result = result.slice(result.length-9,result.length-1)
+            console.log(result)
             currentComponent.setState({
                 chartData:{
-                    labels: ["", "", "", "", "", "", ""],
+                    labels: ["", "", "", "", "", "", "", ""],
                     datasets: [{
                         label: "",
                         backgroundColor: 'rgb(86, 199, 201)',
@@ -71,9 +72,10 @@ class Chart extends Component{
                     result.unshift(0)
             else
                 result = result.slice(result.length-9,result.length-1)
+            console.log(result)
             currentComponent.setState({
                 chartData:{
-                    labels: ["", "", "", "", "", "", ""],
+                    labels: ["", "", "", "", "", "", "", ""],
                     datasets: [{
                         label: "",
                         backgroundColor: 'rgb(170, 106, 198)',
@@ -104,9 +106,10 @@ class Chart extends Component{
                     result.unshift(0)
             else
                 result = result.slice(result.length-9,result.length-1)
+            console.log(result)
             currentComponent.setState({
                 chartData:{
-                    labels: ["", "", "", "", "", "", ""],
+                    labels: ["", "", "", "", "", "", "", ""],
                     datasets: [{
                         label: "",
                         backgroundColor: 'rgb(119, 183, 219)',
@@ -137,9 +140,10 @@ class Chart extends Component{
                     result.unshift(0)
             else
                 result = result.slice(result.length-9,result.length-1)
+            console.log(result)
             currentComponent.setState({
                 chartData:{
-                    labels: ["", "", "", "", "", "", ""],
+                    labels: ["", "", "", "", "", "", "", ""],
                     datasets: [{
                         label: "",
                         backgroundColor: 'rgb(86, 199, 201)',
@@ -170,14 +174,15 @@ class Chart extends Component{
                     result.unshift(0)
             else
                 result = result.slice(result.length-9,result.length-1)
+            console.log(result)
             currentComponent.setState({
                 chartData:{
-                    labels: ["", "", "", "", "", "", ""],
+                    labels: ["", "", "", "", "", "", "", ""],
                     datasets: [{
                         label: "",
                         backgroundColor: ' rgb(86, 199, 201)',
                         borderColor:'white',
-                        data:response.result,
+                        data:result,
                     }]     
                 }
             })
