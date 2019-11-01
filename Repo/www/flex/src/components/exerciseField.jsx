@@ -108,7 +108,7 @@ class ExerciseField extends React.Component {
           <h3 ref={subtitle => this.subtitle = subtitle}>New Exercise</h3>
           <form onSubmit={this.handleSubmit}>
             <input type="text" name="text" required={true} />
-            <button id="newExNameSave" className={classNames("fa fa-save fa-lg","formButton")} type="submit" name="submit" onClick={this.closeModal}></button>
+            <button id="newExNameSave" className={classNames("fa fa-save fa-lg","formButton")} type="submit" name="submit" ></button>
             <button  id="closeButton" className={classNames("fa fa-times fa-1x","formButton")}onClick={this.closeModal}></button>
           </form>
 
