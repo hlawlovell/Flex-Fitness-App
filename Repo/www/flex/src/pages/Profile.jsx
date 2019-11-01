@@ -6,7 +6,6 @@ import '../components/common.css';
 import Logo from '../components/Logo';
 import GenericDisplay from '../images/genericDisplay.png';
 import axios from 'axios';
-import FormCheckInput from "react-bootstrap/FormCheckInput";
 import { Formik } from 'formik';
 
 

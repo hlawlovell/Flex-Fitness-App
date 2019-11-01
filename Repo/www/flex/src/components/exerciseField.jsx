@@ -2,7 +2,6 @@ import React from 'react';
 import Modal from 'react-modal';
 import classNames from 'classnames';
 import '../components/workout.css'
-import { ListGroup, Button, Input } from "react-bootstrap";
 import axios from 'axios';
 import Cookies from 'js-cookie';
 
@@ -67,7 +66,6 @@ class ExerciseField extends React.Component {
 
   handleSubmit(event) {
     event.preventDefault();
-    const data = event.target.text.value;
     var self = this;
     axios({
       method: 'post',

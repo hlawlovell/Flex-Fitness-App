@@ -3,16 +3,26 @@ import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import axios from 'axios';
 import { Formik } from 'formik';
+import Cookies from 'js-cookie';
 
-const RegisterInfo = (email, password) => {
-  axios
-  .post('http://localhost:8000/signup/', {
-    email,
-    password,
-    password,
+const RegisterInfo = (username, password1, password2) => {
+  console.log(password1)
+  axios({
+    method: 'post',
+    url:"http://localhost:8000/signup/",
+    withCredentials: true,
+    data: {
+      username:username,
+      password1:password1,
+      password2:password2
+    },
+    config:{
+      headers:{'Content-Type':'application/json'}
+    }
   })
-  .then(function() {
-    window.location.href = '/login';
+  .then(function(response) {
+    Cookies.set('Authorization',response.data.key)
+    window.location.href = '/flex';
   });
 }
 
@@ -27,8 +37,8 @@ const Register = () => {
         let errors = {};
 
         // validate email
-        if (!values.email) {
-          errors.email = "Enter an email address";
+        if (!values.username) {
+          errors.username = "Enter a username";
         }
         
         // validate password
@@ -42,7 +52,7 @@ const Register = () => {
         return errors
       }}
       onSubmit={values => {
-        RegisterInfo(values.email, values.password);
+        RegisterInfo(values.username, values.password1, values.password2);
       }}
       
     >
@@ -50,21 +60,19 @@ const Register = () => {
         handleChange,
         values,
         touched,
-        isValid,
         errors,}) => (
         <Form noValidate onSubmit={handleSubmit}>
-        <Form.Group controlId="formBasicEmail">
-          <Form.Label>Email address</Form.Label>
+        <Form.Group controlId="formBasicUsername">
+          <Form.Label>Username</Form.Label>
           <Form.Control 
             type="text" 
-            placeholder="Enter email"
-            name="email"
-            value={values.email}
+            placeholder="Enter username"
+            name="username"
+            value={values.username}
             onChange={handleChange}
-            isInvalid={touched.email && !!errors.email}
           />
           <Form.Control.Feedback type="invalid">
-                  {errors.email}
+                  {errors.username}
           </Form.Control.Feedback>
         </Form.Group>
         <Form.Group controlId="formBasicPassword">
