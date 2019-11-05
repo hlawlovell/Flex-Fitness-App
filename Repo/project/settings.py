@@ -27,7 +27,9 @@ SECRET_KEY = 'ti5lk4xb33rt+^jbg02x5uxy#91^o(nz7$)1on&upnx7d#k6=*'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+        '52.63.210.110'
+        ]
 CORS_ORIGIN_ALLOW_ALL = False
 
 CORS_ORIGIN_WHITELIST = (
@@ -119,7 +121,7 @@ DATABASES = {
     }
 }
 
-DEFAULT_AUTHENTICATION_CLASSES: [
+DEFAULT_AUTHENTICATION_CLASSES = [
     'rest_framework.authentication.BasicAuthentication',
     'rest_framework.authentication.TokenAuthentication',
 
