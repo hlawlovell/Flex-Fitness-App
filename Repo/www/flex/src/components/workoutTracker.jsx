@@ -49,7 +49,7 @@ class WorkoutTracker extends Component{
         //request data from backend
         axios({
             method: 'get',
-            url:"http://localhost:8000/dashboard/"+d.getFullYear()+"/"+(myDate.getMonth()+1)+"/"+d.getDate()+"/",
+            url:"http://localhost:8001/dashboard/"+d.getFullYear()+"/"+(myDate.getMonth()+1)+"/"+d.getDate()+"/",
             withCredentials: true
           })
         .then(function (response) {
@@ -66,7 +66,7 @@ class WorkoutTracker extends Component{
         //request data from backend
         axios({
             method: 'get',
-            url:"http://localhost:8000/dashboard/"+d.getFullYear()+"/"+(myDate.getMonth()+1)+"/"+d.getDate()+"/",
+            url:"http://localhost:8001/dashboard/"+d.getFullYear()+"/"+(myDate.getMonth()+1)+"/"+d.getDate()+"/",
             withCredentials: true
           })
         .then(function (response) {
@@ -84,7 +84,7 @@ class WorkoutTracker extends Component{
         //request data from backend
         axios({
             method: 'get',
-            url:"http://localhost:8000/dashboard/"+d.getFullYear()+"/"+(myDate.getMonth()+1)+"/"+d.getDate()+"/",
+            url:"http://localhost:8001/dashboard/"+d.getFullYear()+"/"+(myDate.getMonth()+1)+"/"+d.getDate()+"/",
             withCredentials: true
           })
         .then(function (response) {
@@ -105,7 +105,7 @@ class WorkoutTracker extends Component{
         //request data from backend
         axios({
             method: 'get',
-            url:"http://localhost:8000/dashboard/"+d.getFullYear()+"/"+(myDate.getMonth()+1)+"/"+d.getDate()+"/",
+            url:"http://localhost:8001/dashboard/"+d.getFullYear()+"/"+(myDate.getMonth()+1)+"/"+d.getDate()+"/",
             withCredentials: true
           })
         .then(function (response) {
@@ -124,7 +124,7 @@ class WorkoutTracker extends Component{
         let currentComponent = this;
         axios({
             method: 'get',
-            url:"http://localhost:8000/dashboard/"+d.getFullYear()+"/"+(myDate.getMonth()+1)+"/"+d.getDate()+"/",
+            url:"http://localhost:8001/dashboard/"+d.getFullYear()+"/"+(myDate.getMonth()+1)+"/"+d.getDate()+"/",
             withCredentials: true
           })        
           .then(function (response) {

@@ -7,14 +7,6 @@ import '../components/common.css'
 import '../components/Home.css'
 import Logo from '../components/Logo';
 
-// const load = (date) => {
-//   axios
-//   .post('http://localhost:3000/flexcard/login', {
-//     email,
-//     password,
-//   })
-//   .then();
-// }
 
 const Flex = () => {
 

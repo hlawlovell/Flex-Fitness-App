@@ -54,7 +54,7 @@ class App extends React.Component {
     //request data from backend
     axios({
       method: 'get',
-      url:"http://localhost:8000/exercises/",
+      url:"http://localhost:8001/exercises/",
       withCredentials: true
     })  
     .then(function (response) {
@@ -77,7 +77,7 @@ class App extends React.Component {
     //request data from backend
     axios({
       method: 'get',
-      url:"http://localhost:8000/exercises/",
+      url:"http://localhost:8001/exercises/",
       withCredentials: true
     })  
     .then(function (response) {
@@ -116,7 +116,7 @@ class App extends React.Component {
 ;    
     axios({
       method: 'post',
-      url:"http://localhost:8000/dashboard/"+fulldate[2]+"/"+fulldate[1]+"/"+fulldate[0]+"/",
+      url:"http://localhost:8001/dashboard/"+fulldate[2]+"/"+fulldate[1]+"/"+fulldate[0]+"/",
       withCredentials: true,
       data: {
         title:name,

@@ -114,7 +114,7 @@ const ErrorMessage = styled.div`
 
 const Update = (name, email, password, height, weight) => {
   axios
-    .put('http://localhost:3000/profiles/', {
+    .put('http://localhost:8001/profiles/', {
       name,
       email,
       password,
@@ -139,7 +139,7 @@ const Profile = () => {
   
 
   useEffect(() => {
-    axios.get('http://localhost:3000/profiles/').then(response => {
+    axios.get('http://localhost:8001/profiles/').then(response => {
       setName(response.name);
       setEmail(response.email);
       setPassword(response.password);

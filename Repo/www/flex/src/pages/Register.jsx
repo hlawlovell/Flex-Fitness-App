@@ -9,7 +9,7 @@ const RegisterInfo = (username, password1, password2) => {
   console.log(password1)
   axios({
     method: 'post',
-    url:"http://localhost:8000/signup/",
+    url:"http://localhost:8001/signup/",
     withCredentials: true,
     data: {
       username:username,
