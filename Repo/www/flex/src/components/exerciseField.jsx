@@ -69,7 +69,7 @@ class ExerciseField extends React.Component {
     var self = this;
     axios({
       method: 'post',
-      url:"http://localhost:8001/exercises/",
+      url:"http://52.63.210.110:8001/exercises/",
       withCredentials: true,
       data: {
         name:event.target.text.value

@@ -26,7 +26,7 @@ class Chart extends Component{
         //request data from backend
         axios({
             method: 'get',
-            url:"http://localhost:8001/flexcard/",
+            url:"http://52.63.210.110:8001/flexcard/",
             withCredentials: true
           })
         .then(function (response) {
@@ -61,7 +61,7 @@ class Chart extends Component{
 
         axios({
             method: 'get',
-            url:"http://localhost:8001/flexcard/",
+            url:"http://52.63.210.110:8001/flexcard/",
             withCredentials: true
           })
         .then(function (response) {
@@ -95,7 +95,7 @@ class Chart extends Component{
 
         axios({
             method: 'get',
-            url:"http://localhost:8001/flexcard/",
+            url:"http://52.63.210.110:8001/flexcard/",
             withCredentials: true
           })
         .then(function (response) {
@@ -129,7 +129,7 @@ class Chart extends Component{
 
         axios({
             method: 'get',
-            url:"http://localhost:8001/flexcard/",
+            url:"http://52.63.210.110:8001/flexcard/",
             withCredentials: true
           })
         .then(function (response) {
@@ -163,7 +163,7 @@ class Chart extends Component{
 
         axios({
             method: 'get',
-            url:"http://localhost:8001/flexcard/",
+            url:"http://52.63.210.110:8001/flexcard/",
             withCredentials: true
           })
         .then(function (response) {
