@@ -35,8 +35,11 @@ CORS_ORIGIN_ALLOW_ALL = False
 CORS_ORIGIN_WHITELIST = (
        'http://localhost:3000',
        'http://localhost:8000',
+       'http://52.63.210.110',
+       'http://localhost:8001',
 )
 CORS_ALLOW_HEADERS = [
+    'Access-Control-Allow-Origin',
     'accept',
     'accept-encoding',
     'authorization',

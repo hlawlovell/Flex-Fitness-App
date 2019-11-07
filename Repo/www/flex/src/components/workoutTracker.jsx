@@ -148,8 +148,9 @@ class WorkoutTracker extends Component{
                 <ListGroup.Item className={classNames("noselect","exerciseWrapper")}  >
                     <Collapsible className={classNames("noselect","exerciseLabel")} trigger={<Trigger />}>
                     <p className="exerciseRepsWrap">{item.sets.map(function(set){
+			var setArray = set.split(":");
                         return(
-                            <a className="exerciseReps">{set[0]+"x"+set.substring(2)}</a>
+                            <a className="exerciseReps">{setArray[0]+"x"+setArray[1]}</a>
                         )})}<a className={classNames("fa fa-trash","deleteWorkout")} ></a></p>
                     </Collapsible>
                 </ListGroup.Item>     

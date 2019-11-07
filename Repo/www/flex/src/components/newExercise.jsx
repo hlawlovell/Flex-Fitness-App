@@ -162,7 +162,7 @@ class App extends React.Component {
             </select>
           </label >
           <div id="adExButtonWrap" ><ExerciseField  onClose={this.onClose}/></div>
-          <div class="exerciseInput">Reps:<input type="number" step="1" name="Reps" required={true} /></div>
+          <div class="exerciseInput">Reps:<input type="number" name="Reps" required={true} /></div>
           <div class="exerciseInput">Weight:<input type="float" name="Weight" required={true} /></div>
           <div  id="exerciseSave"><button className={classNames("fa fa-save fa-lg","formButton")} type="submit" name="submit" ></button></div>
           <button  id="closeButton" className={classNames("fa fa-times fa-1x","formButton")}onClick={this.closeModal}></button>
